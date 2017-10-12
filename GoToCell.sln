@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoToCell", "GoToCell\GoToCell.csproj", "{019EAFC9-FF53-407D-BE85-F0534357E3FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoToCell", "GoToCell\GoToCell.csproj", "{019EAFC9-FF53-407D-BE85-F0534357E3FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChingChongLingLongTingTong", "ChingChongLingLongTingTong\ChingChongLingLongTingTong.csproj", "{70BDA367-FCAC-4E1E-944B-3AE00BC17C23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{019EAFC9-FF53-407D-BE85-F0534357E3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{019EAFC9-FF53-407D-BE85-F0534357E3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{019EAFC9-FF53-407D-BE85-F0534357E3FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70BDA367-FCAC-4E1E-944B-3AE00BC17C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70BDA367-FCAC-4E1E-944B-3AE00BC17C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70BDA367-FCAC-4E1E-944B-3AE00BC17C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70BDA367-FCAC-4E1E-944B-3AE00BC17C23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {571CB1F9-C4C5-4B47-A265-50E3D956BCDE}
 	EndGlobalSection
 EndGlobal
