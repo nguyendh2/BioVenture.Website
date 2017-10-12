@@ -60,7 +60,7 @@ namespace WebApplication1test.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = "IsScenarioManager: "+ user.IsScenarioManager ?? "NULL",
             };
 
             return View(model);
