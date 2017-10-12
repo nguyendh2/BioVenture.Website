@@ -1,0 +1,6 @@
+Notes for Friday:
+1. Test to see if we can call and use the account tables built by default authentication feature (DAF)
+2. Test to see if we can switch sql database connection, and rename it appropriately (renaming everything including tables)
+
+3. If those 2 above fail, we have to create our own tables again for accounts.  
+3b. Then look up how to hash and securely store the password.
