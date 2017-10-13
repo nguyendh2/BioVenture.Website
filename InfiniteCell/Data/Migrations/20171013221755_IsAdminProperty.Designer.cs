@@ -11,9 +11,10 @@ using System;
 namespace InfiniteCell.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171013221755_IsAdminProperty")]
+    partial class IsAdminProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,6 +35,12 @@ namespace InfiniteCell.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("IsAdmin");
+
+                    b.Property<bool>("IsScenarioManager");
+
+                    b.Property<bool>("IsStudent");
 
                     b.Property<bool>("LockoutEnabled");
 
