@@ -13,7 +13,11 @@ namespace WebApplication1test.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
+            //var connectionString = @"";
+            //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //optionsBuilder.UseSqlServer(connectionString);
+
+            //return new ApplicationDbContext(optionsBuilder.Options);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
