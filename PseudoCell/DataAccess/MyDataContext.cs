@@ -11,5 +11,7 @@ namespace PseudoCell.DataAccess
         }
         
         public DbSet<User> Users { get; set; }
+
+        public DbSet<GameModel> GameModels { get; set; }
     }
 }

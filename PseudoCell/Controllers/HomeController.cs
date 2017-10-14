@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using PseudoCell.DataAccess;
+using PseudoCell.Models;
 using Microsoft.Owin.Security;
 
 namespace PseudoCell.Controllers
@@ -30,8 +32,22 @@ namespace PseudoCell.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var user = UserManager.FindById(User.Identity.GetUserId());
-                //TODO use my data context to get myUser and display account status accordingly
-                    ViewBag.UserTitle = "Admin";
+                using (var context = new MyDataContext())
+                {
+                    var result = context.Users.FirstOrDefault(x => x.AspNetUserId.Equals(user.Id,StringComparison.OrdinalIgnoreCase));
+                    if (result == null) {
+                        ViewBag.UserTitle = "Error - Failed to determine";
+                    }
+                    else if (result.IsAdmin)
+                    {
+                        ViewBag.UserTitle = "Admin (Account Status will go away in the next implementation phase)";
+                    }
+                    else
+                    {
+                        ViewBag.UserTitle = "Student";
+                    }
+                }
+                    
             }
             return View();
         }
@@ -81,7 +97,7 @@ namespace PseudoCell.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contacts";
 
             return View();
         }

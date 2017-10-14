@@ -199,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DataAccess\MyDataContext.cs" />
@@ -207,6 +208,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\GameModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\User.cs" />
@@ -217,6 +219,14 @@
     <Compile Include="MyDataContextMigrations\201710141736302_MyDataContext_m2.cs" />
     <Compile Include="MyDataContextMigrations\201710141736302_MyDataContext_m2.Designer.cs">
       <DependentUpon>201710141736302_MyDataContext_m2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201710142040317_MyDataContext_m3.cs" />
+    <Compile Include="MyDataContextMigrations\201710142040317_MyDataContext_m3.Designer.cs">
+      <DependentUpon>201710142040317_MyDataContext_m3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201710142042327_MyDataContext_m4.cs" />
+    <Compile Include="MyDataContextMigrations\201710142042327_MyDataContext_m4.Designer.cs">
+      <DependentUpon>201710142042327_MyDataContext_m4.cs</DependentUpon>
     </Compile>
     <Compile Include="MyDataContextMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -279,6 +289,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,6 +320,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDataContextMigrations\201710141736302_MyDataContext_m2.resx">
       <DependentUpon>201710141736302_MyDataContext_m2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201710142040317_MyDataContext_m3.resx">
+      <DependentUpon>201710142040317_MyDataContext_m3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201710142042327_MyDataContext_m4.resx">
+      <DependentUpon>201710142042327_MyDataContext_m4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
