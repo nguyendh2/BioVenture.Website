@@ -1,6 +1,5 @@
-Notes for Friday:
-1. Test to see if we can call and use the account tables built by default authentication feature (DAF)
-2. Test to see if we can switch sql database connection, and rename it appropriately (renaming everything including tables)
+Notes for Saturday:
 
-3. If those 2 above fail, we have to create our own tables again for accounts.  
-3b. Then look up how to hash and securely store the password.
+1. Transfer the image and the home page changes from InfiniteCell to PseudoCell
+2. Change controller method to generate a User and insert into User table
+3. Display admin/student at the top where it says hello when logged in
