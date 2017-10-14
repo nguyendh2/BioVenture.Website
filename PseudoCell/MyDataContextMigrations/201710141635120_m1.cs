@@ -1,9 +1,9 @@
-namespace PseudoCell.Migrations
+namespace PseudoCell.MyDataContextMigrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialMigration : DbMigration
+    public partial class m1 : DbMigration
     {
         public override void Up()
         {
@@ -12,11 +12,12 @@ namespace PseudoCell.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false, identity: true),
-                        AspNetUserId = c.Int(nullable: false),
-                        username = c.String(nullable: false),
+                        AspNetUserId = c.String(nullable: false, maxLength: 450),
+                        username = c.String(nullable: false, maxLength: 30),
                         IsManager = c.Boolean(nullable: false),
                         IsStudent = c.Boolean(nullable: false),
                         IsAdmin = c.Boolean(nullable: false),
+                        StudentId = c.String(maxLength: 30),
                     })
                 .PrimaryKey(t => t.UserId);
             

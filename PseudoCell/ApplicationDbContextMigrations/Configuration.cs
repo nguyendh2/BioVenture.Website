@@ -1,18 +1,19 @@
-namespace PseudoCell.Migrations
+namespace PseudoCell.ApplicationDbContextMigrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PseudoCell.DataAccess.MyDataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<PseudoCell.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            MigrationsDirectory = @"ApplicationDbContextMigrations";
         }
 
-        protected override void Seed(PseudoCell.DataAccess.MyDataContext context)
+        protected override void Seed(PseudoCell.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
