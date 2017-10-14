@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Notes.txt = Notes.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfiniteCell", "InfiniteCell\InfiniteCell.csproj", "{E6845454-665D-4389-A77C-94CD39FAB676}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoCell", "PseudoCell\PseudoCell.csproj", "{36EB73B3-BB49-4BFD-B116-35EC8E57274D}"
 EndProject
 Global
@@ -18,10 +16,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E6845454-665D-4389-A77C-94CD39FAB676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6845454-665D-4389-A77C-94CD39FAB676}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6845454-665D-4389-A77C-94CD39FAB676}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6845454-665D-4389-A77C-94CD39FAB676}.Release|Any CPU.Build.0 = Release|Any CPU
 		{36EB73B3-BB49-4BFD-B116-35EC8E57274D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36EB73B3-BB49-4BFD-B116-35EC8E57274D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36EB73B3-BB49-4BFD-B116-35EC8E57274D}.Release|Any CPU.ActiveCfg = Release|Any CPU
