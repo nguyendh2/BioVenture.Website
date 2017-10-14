@@ -1,5 +1,5 @@
 Notes for Saturday:
 
-1. Transfer the image and the home page changes from InfiniteCell to PseudoCell
-2. Change controller method to generate a User and insert into User table
-3. Display admin/student at the top where it says hello when logged in
+Done 1. Transfer the image and the home page changes from InfiniteCell to PseudoCell
+Done 2. Change controller method to generate a User and insert into User table
+Done 3. Display admin/student at the top where it says hello when logged in

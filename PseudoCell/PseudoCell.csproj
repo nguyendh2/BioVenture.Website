@@ -214,6 +214,10 @@
     <Compile Include="MyDataContextMigrations\201710141635120_m1.Designer.cs">
       <DependentUpon>201710141635120_m1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyDataContextMigrations\201710141736302_MyDataContext_m2.cs" />
+    <Compile Include="MyDataContextMigrations\201710141736302_MyDataContext_m2.Designer.cs">
+      <DependentUpon>201710141736302_MyDataContext_m2.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyDataContextMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDataContextMigrations\201710141635120_m1.resx">
       <DependentUpon>201710141635120_m1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201710141736302_MyDataContext_m2.resx">
+      <DependentUpon>201710141736302_MyDataContext_m2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

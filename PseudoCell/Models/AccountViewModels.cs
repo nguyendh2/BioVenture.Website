@@ -60,6 +60,7 @@ namespace PseudoCell.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        public string Title { get; internal set; }
     }
 
     public class RegisterViewModel
