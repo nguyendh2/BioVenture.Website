@@ -5,6 +5,8 @@ using PseudoCell.DataAccess;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
+using PseudoCell.Models;
+using System.Threading.Tasks;
 
 namespace PseudoCell.Controllers
 {
@@ -15,6 +17,28 @@ namespace PseudoCell.Controllers
 
         public GameController()
         {
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(GameModel model)
+        {
+            if(String.IsNullOrEmpty(model.GameName)==false)
+            {
+                model.CreatedBy = User.Identity.Name;
+                model.CreatedDate = DateTime.Now;
+                using (var context = new MyDataContext())
+                {
+                    context.GameModels.Add(model);
+                    context.SaveChanges();
+                }
+                return RedirectToAction("Index", "Game");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        public ActionResult Create ()
+        {
+            return View ();
         }
 
         public GameController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
