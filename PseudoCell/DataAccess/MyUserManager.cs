@@ -3,7 +3,7 @@ using PseudoCell.Models;
 
 namespace PseudoCell.DataAccess
 {
-    public class MyUserManager
+    public class MyUserManager :IDisposable
     {
         private MyDataContext myDataContext;
         public MyUserManager()
@@ -11,11 +11,25 @@ namespace PseudoCell.DataAccess
             myDataContext = new MyDataContext();
         }
 
-        public User GetUserByAspNetUserId(string id)
+        public bool IsAdmin(string id)
         {
-            if (String.IsNullOrWhiteSpace(id)) return null;
+            if (String.IsNullOrWhiteSpace(id)) return false;
             var result = myDataContext.Users.Find(new { AspNetUserId = id });
-            return result;
+            return result.IsAdmin;
+        }
+
+        public bool IsManager(string id)
+        {
+            if (String.IsNullOrWhiteSpace(id)) return false;
+            var result = myDataContext.Users.Find(new { AspNetUserId = id });
+            return result.IsManager;
+        }
+
+        public bool IsStudent(string id)
+        {
+            if (String.IsNullOrWhiteSpace(id)) return false;
+            var result = myDataContext.Users.Find(new { AspNetUserId = id });
+            return result.IsStudent;
         }
 
         public bool AddUser(User user)
@@ -29,6 +43,16 @@ namespace PseudoCell.DataAccess
             {
                 return false;
             }
+        }
+
+        public static MyUserManager Create()
+        {
+            return new MyUserManager();
+        }
+
+        public void Dispose()
+        {
+            myDataContext = null;
         }
     }
 }

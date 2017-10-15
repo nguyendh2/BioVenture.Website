@@ -18,24 +18,85 @@ namespace PseudoCell.Controllers
         public GameController()
         {
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Edit(Game model)
+        {
+            
+            
+            using (var context = new MyDataContext())
+            {
+                var retrievedGame = context.Games.FirstOrDefault(x=>x.Id == model.Id);
+                retrievedGame.LastChangedBy = User.Identity.Name;
+                retrievedGame.LastChangedDate = DateTime.Now;
+                retrievedGame.Name = model.Name;
+                context.Entry(retrievedGame).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+            return RedirectToAction("Details", "Game", new { gameId = model.Id});
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Delete(int gameId)
+        {
+            using (var context = new MyDataContext())
+            {
+                var retrievedGame = context.Games.FirstOrDefault(x => x.Id == gameId);
+                context.Entry(retrievedGame).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index","Game");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Edit(int gameId)
+        {
+            using (var context = new MyDataContext())
+            {
+                var model = context.Games.FirstOrDefault(x => x.Id == gameId);
+                if (model != null)
+                {
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Index","Home");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Details(int gameId)
+        {
+            using(var context = new MyDataContext())
+            {
+                var model = context.Games.FirstOrDefault(x=>x.Id == gameId);
+                if (model != null)
+                {
+                    return View(model);
+                }
+            }
+            return RedirectToAction("Index","Game");
+            
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GameModel model)
+        public ActionResult Create(Game model)
         {
-            if(String.IsNullOrEmpty(model.GameName)==false)
+            if(String.IsNullOrEmpty(model.Name)==false)
             {
                 model.CreatedBy = User.Identity.Name;
                 model.CreatedDate = DateTime.Now;
                 using (var context = new MyDataContext())
                 {
-                    context.GameModels.Add(model);
+                    context.Games.Add(model);
                     context.SaveChanges();
                 }
                 return RedirectToAction("Index", "Game");
             }
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
         public ActionResult Create ()
         {
             return View ();
@@ -91,7 +152,7 @@ namespace PseudoCell.Controllers
                 //{
                 //    var result = userContext.Users.FirstOrDefault(x => x.AspNetUserId.Equals(user.Id, StringComparison.OrdinalIgnoreCase));
                 //    if(result.IsManager || result.IsAdmin)
-                        return View(context.GameModels);
+                        return View(context.Games);
                 //}
 
             }

@@ -18,15 +18,17 @@ namespace PseudoCell.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private MyUserManager _myUserManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, MyUserManager myUserManager )
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _myUserManager = myUserManager;
         }
 
         public ApplicationSignInManager SignInManager
@@ -38,6 +40,18 @@ namespace PseudoCell.Controllers
             private set 
             { 
                 _signInManager = value; 
+            }
+        }
+
+        public MyUserManager MyUserManager
+        {
+            get
+            {
+                return _myUserManager ?? HttpContext.GetOwinContext().Get<MyUserManager>();
+            }
+            private set
+            {
+                _myUserManager = value;
             }
         }
 
@@ -170,11 +184,12 @@ namespace PseudoCell.Controllers
                         IsStudent = true,
                         AspNetUserId = userId
                     };
-                    using (var context = new MyDataContext())
-                    {
-                        context.Users.Add(myUser);
-                        await context.SaveChangesAsync();
-                    }
+                    MyUserManager.AddUser(myUser);
+                    //using (var context = new MyDataContext())
+                    //{
+                    //    context.Users.Add(myUser);
+                    //    await context.SaveChangesAsync();
+                    //}
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
