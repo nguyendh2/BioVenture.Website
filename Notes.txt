@@ -1,4 +1,8 @@
 Notes for Saturday:
+Note for Monday:10/16/2017
+[NOT COMPLETE]Inside Edit Game web Page, add a button call add scenario.
+[NOT COMPLETE]Add a new controller insde controllers folder called ScenarioController
+[NOT COMPLETE]Inside ScenarioController add a method called Add, parameter is gameId. Link the add Scenario button to this method(use actionlink)
 
 Done 1. Transfer the image and the home page changes from InfiniteCell to PseudoCell
 Done 2. Change controller method to generate a User and insert into User table
