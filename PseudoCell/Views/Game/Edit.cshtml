@@ -34,8 +34,8 @@
 }
 
 <div>
-    @Html.ActionLink("Configure Scenarios", "GoToScenarios", new { gameId = Model.Id });
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("[Back to List]", "Index") |
+    @Html.ActionLink("[Configure Scenarios]", "GoToScenarios", new {gameId = Model.Id})
 </div>
 
 @section Scripts {

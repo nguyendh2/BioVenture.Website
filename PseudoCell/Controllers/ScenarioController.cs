@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI;
 using PseudoCell.DataAccess;
 using PseudoCell.Models;
 
@@ -30,6 +31,22 @@ namespace PseudoCell.Controllers
             var model = new Scenario() {GameId = gameId};
             
             return View(model);
+        }
+
+        public ActionResult BackToGameList()
+        {
+            return RedirectToAction("Index", "Game");
+        }
+
+        [HttpPost]
+        public ActionResult Create(Scenario model)
+        {
+            using (var context = new MyDataContext())
+            {
+                context.Scenarios.Add(model);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index", new { gameId = model.GameId });
         }
     }
 }
