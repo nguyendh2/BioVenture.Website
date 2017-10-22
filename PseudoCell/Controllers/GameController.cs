@@ -17,10 +17,11 @@ namespace PseudoCell.Controllers
 
         public GameController()
         {
+
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Edit(Game model)
         {
             
@@ -37,7 +38,7 @@ namespace PseudoCell.Controllers
             return RedirectToAction("Details", "Game", new { gameId = model.Id});
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Delete(int gameId)
         {
             using (var context = new MyDataContext())
@@ -49,7 +50,7 @@ namespace PseudoCell.Controllers
             return RedirectToAction("Index","Game");
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Edit(int gameId)
         {
             using (var context = new MyDataContext())
@@ -63,7 +64,7 @@ namespace PseudoCell.Controllers
             return RedirectToAction("Index","Home");
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Details(int gameId)
         {
             using(var context = new MyDataContext())
@@ -79,7 +80,7 @@ namespace PseudoCell.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Game model)
         {
@@ -96,6 +97,8 @@ namespace PseudoCell.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        [Authorize]
         [HttpGet]
         public ActionResult Create ()
         {
@@ -131,6 +134,8 @@ namespace PseudoCell.Controllers
                 _userManager = value;
             }
         }
+
+        
         public ApplicationSignInManager SignInManager
         {
             get
@@ -142,21 +147,18 @@ namespace PseudoCell.Controllers
                 _signInManager = value;
             }
         }
+
+        [Authorize]
+        public ActionResult GoToScenarios(int gameId)
+        {
+            return RedirectToAction("Index", "Scenario", new {gameId});
+        }
+
+        [Authorize]
         public ActionResult Index()
         {
             var context = new MyDataContext();
-            if (User.Identity.IsAuthenticated)
-            {
-                //var user = UserManager.FindById(User.Identity.GetUserId());
-                //using (var userContext = new MyDataContext())
-                //{
-                //    var result = userContext.Users.FirstOrDefault(x => x.AspNetUserId.Equals(user.Id, StringComparison.OrdinalIgnoreCase));
-                //    if(result.IsManager || result.IsAdmin)
-                        return View(context.Games);
-                //}
-
-            }
-            return RedirectToAction("Index","Home");
+            return View(context.Games);
         }
     }
 }
