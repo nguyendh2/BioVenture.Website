@@ -7,7 +7,10 @@
 
 <h2>Scenarios</h2>
 <p>
-    @Html.ActionLink("Create", "Create", "Scenario",new {gameId = Model.FirstOrDefault().GameId})
+    @{
+        var gameId = Model.ToList().First().GameId;
+        @Html.ActionLink("Create", "Create", new {gameId})
+    }
 </p>
 <table class="table">
     <tr>

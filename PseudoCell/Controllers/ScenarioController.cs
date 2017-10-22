@@ -23,6 +23,8 @@ namespace PseudoCell.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
         public ActionResult Create(int gameId)
         {
             var model = new Scenario() {GameId = gameId};
