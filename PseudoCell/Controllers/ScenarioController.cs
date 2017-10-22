@@ -23,5 +23,11 @@ namespace PseudoCell.Controllers
             }
             return View(model);
         }
+        public ActionResult Create(int gameId)
+        {
+            var model = new Scenario() {GameId = gameId};
+            
+            return View(model);
+        }
     }
 }
