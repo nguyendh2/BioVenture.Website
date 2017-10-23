@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PseudoCell.Models
 {
@@ -12,6 +13,14 @@ namespace PseudoCell.Models
         [Required]
         public string Description { get; set; }
         public int NextScenarioId { get; set; }
+        public string NextScenarioName { get; set; }
+        public int ScenarioId { get; set; }
+        public string ScenarioName { get; set; }
+        public string LastChangedBy { get; set; }
+        public DateTime? LastChangedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+
     }
 }
 

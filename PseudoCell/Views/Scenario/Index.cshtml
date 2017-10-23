@@ -1,43 +1,45 @@
-﻿@model IEnumerable<PseudoCell.Models.Scenario>
+﻿@model PseudoCell.Models.ScenarioListViewModel
 
 @{
     ViewBag.Title = "Scenario List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Scenarios</h2>
+<h2>Game: @Model.GameName</h2>
+<h3>Scenarios</h3>
 <p>
-    @{
-        var gameId = Model.ToList().First().GameId;
-        @Html.ActionLink("Create", "Create", new {gameId})
-    }
+        @Html.ActionLink("Create", "Create", new {gameId=Model.GameId})
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Scenarios[0].Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Scenarios[0].Description)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-        
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { gameId=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { gameId=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { gameId=item.Id })
-            </td>
-        </tr>
+    @if (Model.Scenarios != null)
+    {
+        foreach (var item in Model.Scenarios)
+         {
+             <tr>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.Name)
+                 </td>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.Description)
+                 </td>
+
+                 <td>
+                     @Html.ActionLink("Edit", "Edit", new {scenarioId = item.Id}) |
+                     @Html.ActionLink("Details", "Details", new {scenarioId = item.Id}) |
+                     @Html.ActionLink("Delete", "Delete", new {gameId = item.Id})
+                 </td>
+             </tr>
+         }
     }
 
 </table>

@@ -202,6 +202,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActionChoiceController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -213,10 +214,12 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActionChoice.cs" />
+    <Compile Include="Models\ActionChoiceListViewModel.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Scenario.cs" />
+    <Compile Include="Models\ScenarioListViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="MyDataContextMigrations\201710141635120_m1.cs" />
     <Compile Include="MyDataContextMigrations\201710141635120_m1.Designer.cs">
@@ -245,6 +248,18 @@
     <Compile Include="MyDataContextMigrations\201710151926527_myDataContext_m7.cs" />
     <Compile Include="MyDataContextMigrations\201710151926527_myDataContext_m7.Designer.cs">
       <DependentUpon>201710151926527_myDataContext_m7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201710230225062_addGameName.cs" />
+    <Compile Include="MyDataContextMigrations\201710230225062_addGameName.Designer.cs">
+      <DependentUpon>201710230225062_addGameName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201710230244340_addLastChangedBy.cs" />
+    <Compile Include="MyDataContextMigrations\201710230244340_addLastChangedBy.Designer.cs">
+      <DependentUpon>201710230244340_addLastChangedBy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201710230252571_addCreatedBy.cs" />
+    <Compile Include="MyDataContextMigrations\201710230252571_addCreatedBy.Designer.cs">
+      <DependentUpon>201710230252571_addCreatedBy.cs</DependentUpon>
     </Compile>
     <Compile Include="MyDataContextMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -313,6 +328,12 @@
     <Content Include="Views\Game\Edit.cshtml" />
     <Content Include="Views\Scenario\Index.cshtml" />
     <Content Include="Views\Scenario\Create.cshtml" />
+    <Content Include="Views\Scenario\Edit.cshtml" />
+    <Content Include="Views\Scenario\Details.cshtml" />
+    <Content Include="Views\ActionChoice\Index.cshtml" />
+    <Content Include="Views\ActionChoice\Create.cshtml" />
+    <Content Include="Views\ActionChoice\Details.cshtml" />
+    <Content Include="Views\ActionChoice\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -358,6 +379,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDataContextMigrations\201710151926527_myDataContext_m7.resx">
       <DependentUpon>201710151926527_myDataContext_m7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201710230225062_addGameName.resx">
+      <DependentUpon>201710230225062_addGameName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201710230244340_addLastChangedBy.resx">
+      <DependentUpon>201710230244340_addLastChangedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201710230252571_addCreatedBy.resx">
+      <DependentUpon>201710230252571_addCreatedBy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

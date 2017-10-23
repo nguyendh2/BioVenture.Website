@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace PseudoCell.Controllers
 {
+    [Authorize]
     public class GameController:Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -24,7 +25,6 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Edit(Game model)
         {
-            
             
             using (var context = new MyDataContext())
             {
