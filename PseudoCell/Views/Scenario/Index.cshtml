@@ -36,7 +36,7 @@
                  <td>
                      @Html.ActionLink("Edit", "Edit", new {scenarioId = item.Id}) |
                      @Html.ActionLink("Details", "Details", new {scenarioId = item.Id}) |
-                     @Html.ActionLink("Delete", "Delete", new {gameId = item.Id})
+                     @Html.ActionLink("Delete", "Delete", new {scenarioId = item.Id})
                  </td>
              </tr>
          }
@@ -44,6 +44,6 @@
 
 </table>
 <div>
-    @Html.ActionLink("[Back to Game List]", "BackToGameList")
+    @Html.ActionLink("[Back to Scenario List]", "BackToScenarioList")
 </div>
 

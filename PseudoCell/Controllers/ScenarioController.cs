@@ -46,7 +46,7 @@ namespace PseudoCell.Controllers
             return View(model);
         }
 
-        public ActionResult BackToGameList()
+        public ActionResult BackToScenarioList()
         {
             return RedirectToAction("Index", "Game");
         }

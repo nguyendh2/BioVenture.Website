@@ -34,9 +34,9 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.NextScenarioName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ScenarioName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NextScenarioName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ScenarioName, new { htmlAttributes = new { @class = "form-control", @readonly="readonly" } })
                 @Html.ValidationMessageFor(model => model.NextScenarioName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -53,7 +53,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("[Back to List]", "Index", new{scenarioId=Model.ScenarioId})
 </div>
 
 @section Scripts {

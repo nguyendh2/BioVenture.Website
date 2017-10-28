@@ -20,7 +20,7 @@ namespace PseudoCell.Controllers
             var scenarioName = "[Scenario Name Here]";
             using (var context = new MyDataContext())
             {
-                actionChoices = context.ActionChoices.Where(x => x.Id == scenarioId).ToList();
+                actionChoices = context.ActionChoices.Where(x => x.ScenarioId == scenarioId).ToList();
                 scenario = context.Scenarios.FirstOrDefault(x => x.Id == scenarioId);
                 if (scenario != null) scenarioName = scenario.Name;
             }
@@ -95,7 +95,7 @@ namespace PseudoCell.Controllers
             {
                 model = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
                 var scenarioId = model.ScenarioId;
-                var scenario = context.Games.FirstOrDefault(x => x.Id == scenarioId);
+                var scenario = context.Scenarios.FirstOrDefault(x => x.Id == scenarioId);
                 var scenarioname = scenario.Name;
                 model.ScenarioName = scenarioname;
             }
@@ -110,14 +110,18 @@ namespace PseudoCell.Controllers
             int scenarioId;
             using (var context = new MyDataContext())
             {
-                var retrievedActionChoice = context.Scenarios.FirstOrDefault(x => x.Id == actionChoiceId);
-                scenarioId = retrievedActionChoice.GameId;
+                var retrievedActionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
+                scenarioId = retrievedActionChoice.ScenarioId;
                 context.Entry(retrievedActionChoice).State = System.Data.Entity.EntityState.Deleted;
                 context.SaveChanges();
             }
-            return RedirectToAction("Index", "Scenario", new { gameId = scenarioId });
+            return RedirectToAction("Index", "ActionChoice", new { scenarioId });
         }
-
+        
+        public ActionResult BackToScenario(int scenarioId)
+        {
+            return RedirectToAction("Edit", "Scenario", new{scenarioId});
+        }
 
     }
 }
