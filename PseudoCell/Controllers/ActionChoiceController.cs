@@ -71,34 +71,48 @@ namespace PseudoCell.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(ActionChoice model)
+        public ActionResult Edit(ActionChoiceEditModel model)
         {
             using (var context = new MyDataContext())
             {
-                var retrievedActionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == model.Id);
+                var retrievedActionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == model.ActionChoice.Id);
                 retrievedActionChoice.LastChangedBy = User.Identity.Name;
                 retrievedActionChoice.LastChangedDate = DateTime.Now;
-                retrievedActionChoice.Name = model.Name;
-                retrievedActionChoice.Description = model.Description;
+                retrievedActionChoice.Name = model.ActionChoice.Name;
+                retrievedActionChoice.Description = model.ActionChoice.Description;
+                var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == model.ActionChoice.NextScenarioId);
+                retrievedActionChoice.NextScenarioId = nextScenario.Id;
+                retrievedActionChoice.NextScenarioName = nextScenario.Name;
                 context.Entry(retrievedActionChoice).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }
-            return RedirectToAction("Details", "ActionChoice", new { ActionChoiceId = model.Id });
+            return RedirectToAction("Details", "ActionChoice", new { ActionChoiceId = model.ActionChoice.Id });
         }
         
         [HttpGet]
         [Authorize]
         public ActionResult Edit(int actionChoiceId)
         {
-            var model = new ActionChoice();
+            var actionChoice = new ActionChoice();
+            var scenariosForSelect = new List<Scenario>();
+            var model = new ActionChoiceEditModel();
             using (var context = new MyDataContext())
             {
-                model = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
-                var scenarioId = model.ScenarioId;
+                actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
+                var scenarioId = actionChoice.ScenarioId;
                 var scenario = context.Scenarios.FirstOrDefault(x => x.Id == scenarioId);
                 var scenarioname = scenario.Name;
-                model.ScenarioName = scenarioname;
+                actionChoice.ScenarioName = scenarioname;
+
+                scenariosForSelect = context.Scenarios.Where(x => x.GameId == scenario.GameId && x.Id != scenarioId).ToList();
             }
+            model.ActionChoice = actionChoice;
+            model.ScenariosForSelection = scenariosForSelect.Select(x=>new SelectListItem
+                                                                                        {
+                                                                                            Value=x.Id.ToString(),
+                                                                                            Text=x.Name
+                                                                                        }).ToList();
+
             return View(model);
         }
 

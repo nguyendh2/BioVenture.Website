@@ -214,6 +214,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActionChoice.cs" />
+    <Compile Include="Models\ActionChoiceEditModel.cs" />
     <Compile Include="Models\ActionChoiceListViewModel.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\IdentityModels.cs" />
