@@ -219,6 +219,7 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PlayScenarioViewModel.cs" />
     <Compile Include="Models\Scenario.cs" />
     <Compile Include="Models\ScenarioListViewModel.cs" />
     <Compile Include="Models\User.cs" />
@@ -338,6 +339,7 @@
     <Content Include="Views\ActionChoice\Create.cshtml" />
     <Content Include="Views\ActionChoice\Details.cshtml" />
     <Content Include="Views\ActionChoice\Edit.cshtml" />
+    <Content Include="Views\Game\Play.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

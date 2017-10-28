@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using PseudoCell.DataAccess;
@@ -19,6 +20,24 @@ namespace PseudoCell.Controllers
         public GameController()
         {
 
+        }
+
+        [HttpGet]
+        public ActionResult Play(int gameId)
+        {
+            var scenario = new Scenario();
+            var model = new PlayScenarioViewModel();
+            List<ActionChoice> actionChoices;
+            using (var context = new MyDataContext())
+            {
+                var game = context.Games.FirstOrDefault(x => x.Id == gameId);
+                scenario = context.Scenarios.FirstOrDefault(x => x.Id == game.FirstScenarioId);
+                actionChoices = context.ActionChoices.Where(x=>x.ScenarioId == game.FirstScenarioId).ToList();
+            }
+
+            model.Scenario = scenario;
+            model.ActionChoices = actionChoices;
+            return View(model);
         }
 
         [HttpPost]
