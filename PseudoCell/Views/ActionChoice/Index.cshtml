@@ -8,7 +8,10 @@
 <h2>Action Choices</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new{scenarioId=Model.ScenarioId})
+    @if (Model.IsManager)
+    {
+        @Html.ActionLink("Create New", "Create", new { scenarioId = Model.ScenarioId })
+    }
 </p>
 <table class="table">
     <tr>
@@ -39,9 +42,10 @@
                 @Html.DisplayFor(modelItem => item.NextScenarioName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {actionChoiceId = item.Id}) |
+                
                 @Html.ActionLink("Details", "Details", new { actionChoiceId = item.Id}) |
-                @Html.ActionLink("Delete", "Delete", new { actionChoiceId = item.Id})
+                @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { actionChoiceId = item.Id })   }|
+                @if(Model.IsManager){@Html.ActionLink("Delete", "Delete", new { actionChoiceId = item.Id})}
             </td>
         </tr>
     }

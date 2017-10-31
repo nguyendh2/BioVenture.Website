@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using PseudoCell.Models;
 
 namespace PseudoCell.DataAccess
@@ -11,24 +12,24 @@ namespace PseudoCell.DataAccess
             myDataContext = new MyDataContext();
         }
 
-        public bool IsAdmin(string id)
-        {
-            if (String.IsNullOrWhiteSpace(id)) return false;
-            var result = myDataContext.Users.Find(new { AspNetUserId = id });
-            return result.IsAdmin;
-        }
-
         public bool IsManager(string id)
         {
             if (String.IsNullOrWhiteSpace(id)) return false;
-            var result = myDataContext.Users.Find(new { AspNetUserId = id });
+            var result = myDataContext.Users.FirstOrDefault(x=>x.AspNetUserId.Equals(id));
             return result.IsManager;
+        }
+
+        public bool IsAdmin(string id)
+        {
+            if (String.IsNullOrWhiteSpace(id)) return false;
+            var result = myDataContext.Users.FirstOrDefault(x => x.AspNetUserId.Equals(id));
+            return result.IsAdmin;
         }
 
         public bool IsStudent(string id)
         {
             if (String.IsNullOrWhiteSpace(id)) return false;
-            var result = myDataContext.Users.Find(new { AspNetUserId = id });
+            var result = myDataContext.Users.FirstOrDefault(x => x.AspNetUserId.Equals(id));
             return result.IsStudent;
         }
 
@@ -37,6 +38,7 @@ namespace PseudoCell.DataAccess
             if (user != null)
             {
                 var result = myDataContext.Users.Add(user);
+                myDataContext.SaveChanges();
                 return result != null;
             }
             else

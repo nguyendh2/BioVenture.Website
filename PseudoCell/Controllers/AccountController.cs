@@ -39,7 +39,7 @@ namespace PseudoCell.Controllers
             }
             private set 
             { 
-                _signInManager = value; 
+                _signInManager = value;
             }
         }
 
@@ -54,6 +54,8 @@ namespace PseudoCell.Controllers
                 _myUserManager = value;
             }
         }
+
+
 
         public ApplicationUserManager UserManager
         {
@@ -184,12 +186,8 @@ namespace PseudoCell.Controllers
                         IsStudent = true,
                         AspNetUserId = userId
                     };
+
                     MyUserManager.AddUser(myUser);
-                    //using (var context = new MyDataContext())
-                    //{
-                    //    context.Users.Add(myUser);
-                    //    await context.SaveChangesAsync();
-                    //}
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

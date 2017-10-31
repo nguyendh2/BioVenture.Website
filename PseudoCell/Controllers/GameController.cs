@@ -16,12 +16,38 @@ namespace PseudoCell.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private MyUserManager _myUserManager;
 
         public GameController()
         {
-
+            
         }
 
+        public GameController(MyUserManager myUserManager)
+        {
+            _myUserManager = myUserManager;
+        }
+
+        private ActionResult RedirectToHomeIfNotAdmin()
+        {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index","Home");
+
+            return null;
+        }
+
+        public MyUserManager MyUserManager
+        {
+            get
+            {
+                return _myUserManager ?? HttpContext.GetOwinContext().Get<MyUserManager>();
+            }
+            private set
+            {
+                _myUserManager = value;
+            }
+        }
+        
         [HttpGet]
         public ActionResult Play(int gameId)
         {
@@ -44,7 +70,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Edit(Game model)
         {
-            
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             using (var context = new MyDataContext())
             {
                 var retrievedGame = context.Games.FirstOrDefault(x=>x.Id == model.Id);
@@ -60,6 +88,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Delete(int gameId)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             using (var context = new MyDataContext())
             {
                 var retrievedGame = context.Games.FirstOrDefault(x => x.Id == gameId);
@@ -72,6 +103,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Edit(int gameId)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             using (var context = new MyDataContext())
             {
                 var model = context.Games.FirstOrDefault(x => x.Id == gameId);
@@ -103,7 +137,10 @@ namespace PseudoCell.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Game model)
         {
-            if(String.IsNullOrEmpty(model.Name)==false)
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
+            if (String.IsNullOrEmpty(model.Name)==false)
             {
                 model.CreatedBy = User.Identity.Name;
                 model.CreatedDate = DateTime.Now;
@@ -121,6 +158,9 @@ namespace PseudoCell.Controllers
         [HttpGet]
         public ActionResult Create ()
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             return View ();
         }
 
@@ -176,8 +216,13 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var context = new MyDataContext();
-            return View(context.Games);
+            var model = new GameListViewModel();
+            using (var context = new MyDataContext())
+            {
+                model.Games = context.Games.ToList();
+                model.IsManager = MyUserManager.IsManager(User.Identity.GetUserId());
+            }
+            return View(model);
         }
     }
 }

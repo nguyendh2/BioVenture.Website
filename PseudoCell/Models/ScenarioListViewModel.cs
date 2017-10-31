@@ -10,5 +10,6 @@ namespace PseudoCell.Models
         public List<Scenario> Scenarios { get; set; }
         public string GameName { get; set; }
         public int GameId { get; set; }
+        public bool IsManager { get; set; }
     }
 }

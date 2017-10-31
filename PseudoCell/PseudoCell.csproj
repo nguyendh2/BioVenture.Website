@@ -217,6 +217,7 @@
     <Compile Include="Models\ActionChoiceEditModel.cs" />
     <Compile Include="Models\ActionChoiceListViewModel.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameListViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlayScenarioViewModel.cs" />

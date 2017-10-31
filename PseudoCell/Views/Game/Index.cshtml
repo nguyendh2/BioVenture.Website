@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PseudoCell.Models.Game>
+﻿@model PseudoCell.Models.GameListViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -8,20 +8,23 @@
 <h2>Games</h2>
 
 <p>
-    @Html.ActionLink("Create", "Create", "Game")
+    @if (Model.IsManager)
+    {
+        @Html.ActionLink("Create", "Create", "Game");
+    }
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Games[0].Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
+            @Html.DisplayNameFor(model => model.Games[0].CreatedDate)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Games) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -31,10 +34,18 @@
         </td>
         
         <td>
-            @Html.ActionLink("Play","Play",new{gameId = item.Id})|
-            @Html.ActionLink("Edit", "Edit", new {gameId = item.Id}) |
+            @Html.ActionLink("Play", "Play", new {gameId = item.Id})|
             @Html.ActionLink("Details", "Details", new {gameId = item.Id}) |
-            @Html.ActionLink("Delete", "Delete", new {gameId = item.Id})
+            @if (Model.IsManager)
+            {
+                @Html.ActionLink("Edit", "Edit", new {gameId = item.Id})
+
+            }|
+            @if (Model.IsManager)
+            {
+                @Html.ActionLink("Delete", "Delete", new {gameId = item.Id})
+            }
+
         </td>
     </tr>
 }

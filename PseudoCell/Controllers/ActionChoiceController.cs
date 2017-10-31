@@ -3,14 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PseudoCell.DataAccess;
 using PseudoCell.Models;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace PseudoCell.Controllers
 {
     [Authorize]
     public class ActionChoiceController:Controller
     {
+        private MyUserManager _myUserManager;
+
+        public ActionChoiceController()
+        {
+            
+        }
+
+        public ActionChoiceController(MyUserManager myUserManager)
+        {
+            _myUserManager = myUserManager;
+        }
+
+        private ActionResult RedirectToHomeIfNotAdmin()
+        {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index", "Home");
+
+            return null;
+        }
+
+        public MyUserManager MyUserManager
+        {
+            get
+            {
+                return _myUserManager ?? HttpContext.GetOwinContext().Get<MyUserManager>();
+            }
+            private set
+            {
+                _myUserManager = value;
+            }
+        }
+
         [HttpGet]
         [Authorize]
         public ActionResult Index(int scenarioId)
@@ -25,6 +59,7 @@ namespace PseudoCell.Controllers
                 if (scenario != null) scenarioName = scenario.Name;
             }
             var model = new ActionChoiceListViewModel() { ActionChoices = actionChoices, ScenarioName = scenarioName, ScenarioId = scenarioId };
+            model.IsManager = MyUserManager.IsManager(User.Identity.GetUserId());
             return View(model);
         }
 
@@ -32,6 +67,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Create(int scenarioId)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             var model = new ActionChoice(){ScenarioId = scenarioId};
             using (var context = new MyDataContext())
             {
@@ -47,6 +85,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Create(ActionChoice model)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             model.CreatedBy = User.Identity.Name;
             model.CreatedDate = DateTime.Now;
             using (var context = new MyDataContext())
@@ -73,6 +114,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Edit(ActionChoiceEditModel model)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             using (var context = new MyDataContext())
             {
                 var retrievedActionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == model.ActionChoice.Id);
@@ -93,6 +137,9 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Edit(int actionChoiceId)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             var actionChoice = new ActionChoice();
             var scenariosForSelect = new List<Scenario>();
             var model = new ActionChoiceEditModel();
@@ -115,12 +162,13 @@ namespace PseudoCell.Controllers
 
             return View(model);
         }
-
-
-
+        
         [HttpGet]
         public ActionResult Delete(int actionChoiceId)
         {
+            var returnView = RedirectToHomeIfNotAdmin();
+            if (returnView != null) return returnView;
+
             int scenarioId;
             using (var context = new MyDataContext())
             {
