@@ -5,34 +5,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Play</h2>
+<h2>@Model.Scenario.GameName</h2>
+<h3>Scenario - @Model.Scenario.Name</h3>
+<hr/>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ActionChoices[0].Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActionChoices[0].Description)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model.ActionChoices) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
+<div>
+    <h4>Description</h4>
+    @Html.DisplayFor(x => Model.Scenario.Description)
+    <hr/>
+</div>
+<div>
+    <h4>Choices</h4>
+    @foreach (var item in Model.ActionChoices)
+    {
+        <div style="margin-left: 50px; margin-bottom: 20px;">
+            (@Html.ActionLink("Select", "Select", new { actionChoiceId = item.Id }))<b>@Html.DisplayFor(modelItem => item.Name) </b>
+            <br/>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Select", "Select", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+            <br/>
+            
+        </div>
+    }
+    <hr/>
+</div>

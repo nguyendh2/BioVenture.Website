@@ -15,5 +15,8 @@ namespace PseudoCell.DataAccess
         public DbSet<Game> Games { get; set; }
         public DbSet<Scenario> Scenarios { get; set; }
         public DbSet<ActionChoice> ActionChoices { get; set; }
+        public DbSet<GameResult> GameResults { get; set; }
+
+        public System.Data.Entity.DbSet<PseudoCell.Models.GameResultViewModel> GameResultViewModels { get; set; }
     }
 }

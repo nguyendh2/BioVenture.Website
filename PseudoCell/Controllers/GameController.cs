@@ -23,6 +23,77 @@ namespace PseudoCell.Controllers
             
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult Select(int actionChoiceId)
+        {
+            var model = new PlayScenarioViewModel();
+            using (var context = new MyDataContext())
+            {
+                var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
+                var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.NextScenarioId);
+                if (nextScenario == null)
+                {
+                    return RedirectToAction("EndGame",actionChoiceId);
+                }
+                var actionChoices = context.ActionChoices.Where(x => x.ScenarioId == nextScenario.Id).ToList();
+                var game = context.Games.FirstOrDefault(x => x.Id == nextScenario.GameId);
+                model.Scenario = nextScenario;
+                model.ActionChoices = actionChoices;
+                if(game!=null) model.Scenario.GameName = game.Name;
+
+            }
+
+            return View("Play",model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult EndGame(int actionChoiceId)
+        {
+            var model = new GameResultViewModel() {ActionChoiceId = actionChoiceId};
+            using (var context = new MyDataContext())
+            {
+                var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
+                var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                model.ActionChoiceName = actionChoice?.Name;
+                model.ScenarioName = scenario?.Name;
+                model.GameName = game?.Name;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EndGame(GameResultViewModel model)
+        {
+            var gameResultToSave = new GameResult()
+            {
+                ActionChoiceId = model.ActionChoiceId,
+                Comments = model.Comments,
+                AspNetUserId = User.Identity.GetUserId()
+            };
+
+            using (var context = new MyDataContext())
+            {
+                context.GameResults.Add(gameResultToSave);
+                context.SaveChanges();
+            }
+
+            model.Id = gameResultToSave.Id;
+            
+            return RedirectToAction("GameResultDetails", model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult GameResultDetails(GameResultViewModel model)
+        {
+            return View(model);
+        }
+
         public GameController(MyUserManager myUserManager)
         {
             _myUserManager = myUserManager;
@@ -58,6 +129,7 @@ namespace PseudoCell.Controllers
             {
                 var game = context.Games.FirstOrDefault(x => x.Id == gameId);
                 scenario = context.Scenarios.FirstOrDefault(x => x.Id == game.FirstScenarioId);
+                if(game!=null) scenario.GameName = game.Name;
                 actionChoices = context.ActionChoices.Where(x=>x.ScenarioId == game.FirstScenarioId).ToList();
             }
 

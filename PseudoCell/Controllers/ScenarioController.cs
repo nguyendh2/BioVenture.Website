@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -105,7 +106,17 @@ namespace PseudoCell.Controllers
             {
                 context.Scenarios.Add(model);
                 context.SaveChanges();
+                var scenarioId = model.Id;
+                var game = context.Games.FirstOrDefault(x => x.Id == model.GameId);
+                if (game!=null && game.FirstScenarioId==0)
+                {
+                    game.FirstScenarioId = scenarioId;
+                    context.Entry(game).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                }
+                
             }
+            
             return RedirectToAction("Index", new { gameId = model.GameId });
         }
 

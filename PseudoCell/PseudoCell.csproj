@@ -214,10 +214,12 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActionChoice.cs" />
-    <Compile Include="Models\ActionChoiceEditModel.cs" />
+    <Compile Include="Models\ActionChoiceAddEditModel.cs" />
     <Compile Include="Models\ActionChoiceListViewModel.cs" />
+    <Compile Include="Models\GameResult.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameListViewModel.cs" />
+    <Compile Include="Models\GameResultViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlayScenarioViewModel.cs" />
@@ -263,6 +265,10 @@
     <Compile Include="MyDataContextMigrations\201710230252571_addCreatedBy.cs" />
     <Compile Include="MyDataContextMigrations\201710230252571_addCreatedBy.Designer.cs">
       <DependentUpon>201710230252571_addCreatedBy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201711042118431_2017Nov4.cs" />
+    <Compile Include="MyDataContextMigrations\201711042118431_2017Nov4.Designer.cs">
+      <DependentUpon>201711042118431_2017Nov4.cs</DependentUpon>
     </Compile>
     <Compile Include="MyDataContextMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -341,6 +347,8 @@
     <Content Include="Views\ActionChoice\Details.cshtml" />
     <Content Include="Views\ActionChoice\Edit.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
+    <Content Include="Views\Game\EndGame.cshtml" />
+    <Content Include="Views\Game\GameResultDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -395,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDataContextMigrations\201710230252571_addCreatedBy.resx">
       <DependentUpon>201710230252571_addCreatedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201711042118431_2017Nov4.resx">
+      <DependentUpon>201711042118431_2017Nov4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

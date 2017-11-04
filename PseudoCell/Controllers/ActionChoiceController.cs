@@ -67,20 +67,27 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult Create(int scenarioId)
         {
+            var scenariosForSelect = new List<Scenario>();
             var returnView = RedirectToHomeIfNotAdmin();
             if (returnView != null) return returnView;
 
-            var model = new ActionChoice(){ScenarioId = scenarioId};
+            var model = new ActionChoiceAddEditModel(){ActionChoice = new ActionChoice{ScenarioId = scenarioId}};
             using (var context = new MyDataContext())
             {
                 var scenario = context.Scenarios.FirstOrDefault(x => x.Id == scenarioId);
                 var scenarioname = scenario.Name;
                 model.ScenarioName = scenarioname;
+
+                scenariosForSelect = context.Scenarios.Where(x => x.GameId == scenario.GameId && x.Id != scenarioId).ToList();
             }
-            return View(model);
+            model.ScenariosForSelection = scenariosForSelect.Select(x=>new SelectListItem
+                                                    {
+                                                        Value=x.Id.ToString(),
+                                                        Text=x.Name
+                                                    }).ToList();
+                return View(model);
         }
-
-
+        
         [HttpPost]
         [Authorize]
         public ActionResult Create(ActionChoice model)
@@ -112,7 +119,7 @@ namespace PseudoCell.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(ActionChoiceEditModel model)
+        public ActionResult Edit(ActionChoiceAddEditModel model)
         {
             var returnView = RedirectToHomeIfNotAdmin();
             if (returnView != null) return returnView;
@@ -142,7 +149,7 @@ namespace PseudoCell.Controllers
 
             var actionChoice = new ActionChoice();
             var scenariosForSelect = new List<Scenario>();
-            var model = new ActionChoiceEditModel();
+            var model = new ActionChoiceAddEditModel();
             using (var context = new MyDataContext())
             {
                 actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
