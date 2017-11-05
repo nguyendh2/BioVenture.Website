@@ -34,7 +34,7 @@ namespace PseudoCell.Controllers
                 var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.NextScenarioId);
                 if (nextScenario == null)
                 {
-                    return RedirectToAction("EndGame",actionChoiceId);
+                    return RedirectToAction("EndGame",new{actionChoiceId});
                 }
                 var actionChoices = context.ActionChoices.Where(x => x.ScenarioId == nextScenario.Id).ToList();
                 var game = context.Games.FirstOrDefault(x => x.Id == nextScenario.GameId);
@@ -65,6 +65,40 @@ namespace PseudoCell.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult GameResultIndex()
+        {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index", "Home");
+
+            var model = new List<GameResultViewModel>();
+            using (var context = new MyDataContext())
+            {
+                foreach (var result in context.GameResults)
+                {
+                    var newGameResult = new GameResultViewModel();
+                    
+                    var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == result.ActionChoiceId);
+                    var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                    var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                    newGameResult.ActionChoiceName = actionChoice?.Name;
+                    newGameResult.ScenarioName = scenario?.Name;
+                    newGameResult.GameName = game?.Name;
+                    newGameResult.Comments = result.Comments;
+                    newGameResult.StudentName = result.StudentName;
+                    newGameResult.GradeLetter = result.GradeLetter;
+                    newGameResult.GradePercent = result.GradePercent;
+                    newGameResult.CompleteDate = result.CompleteDate;
+                    
+                    model.Add(newGameResult);
+                }
+            }
+
+            return View(model);
+        }
+
         [HttpPost]
         [Authorize]
         public ActionResult EndGame(GameResultViewModel model)
@@ -73,7 +107,9 @@ namespace PseudoCell.Controllers
             {
                 ActionChoiceId = model.ActionChoiceId,
                 Comments = model.Comments,
-                AspNetUserId = User.Identity.GetUserId()
+                AspNetUserId = User.Identity.GetUserId(),
+                StudentName = User.Identity.GetUserName(),
+                CompleteDate = DateTime.Now
             };
 
             using (var context = new MyDataContext())
@@ -81,16 +117,38 @@ namespace PseudoCell.Controllers
                 context.GameResults.Add(gameResultToSave);
                 context.SaveChanges();
             }
-
-            model.Id = gameResultToSave.Id;
             
-            return RedirectToAction("GameResultDetails", model);
+            return RedirectToAction("GameResultDetails",new{gameResultId = gameResultToSave.Id});
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult GameResultDetails(GameResultViewModel model)
+        public ActionResult GameResultDetails(int gameResultId)
         {
+            var model = new GameResultViewModel();
+            using (var context = new MyDataContext())
+            {
+                var gameResult = context.GameResults.FirstOrDefault(x => x.Id == gameResultId);
+                
+                var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == gameResult.ActionChoiceId);
+                var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                model.ActionChoiceName = actionChoice?.Name;
+                model.ScenarioName = scenario?.Name;
+                model.GameName = game?.Name;
+                
+                model.Id = gameResult.Id;
+                model.ActionChoiceId = gameResult.Id;
+                model.AspNetUserId = gameResult.AspNetUserId;
+                model.GradeLetter = gameResult.GradeLetter;
+                model.GradePercent = gameResult.GradePercent;
+                model.Comments = gameResult.Comments;
+                model.StudentName = gameResult.StudentName;
+                model.StudentId = gameResult.StudentId;
+
+
+            }
             return View(model);
         }
 

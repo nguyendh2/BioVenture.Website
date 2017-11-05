@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PseudoCell.Models
 {
@@ -12,7 +13,11 @@ namespace PseudoCell.Models
         public string Comments { get; set; }
         [Required]
         public string AspNetUserId { get; set; }
+        public string StudentId { get; set; }
+        public string StudentName { get; set; }
         public string GradeLetter { get; set; }
-        public double GradePercent { get; set; }
+        public double? GradePercent { get; set; }
+        [Required]
+        public DateTime CompleteDate { get; set; }
     }
 }

@@ -10,7 +10,9 @@
 <p>
     @if (Model.IsManager)
     {
-        @Html.ActionLink("Create", "Create", "Game");
+        @Html.ActionLink("Create", "Create", "Game")
+        <span> | </span>
+        @Html.ActionLink("Grade", "GameResultIndex", "Game")
     }
 </p>
 <table class="table">

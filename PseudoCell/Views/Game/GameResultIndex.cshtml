@@ -1,0 +1,67 @@
+﻿@model IEnumerable<PseudoCell.Models.GameResultViewModel>
+
+@{
+    ViewBag.Title = "GameResultIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GameResultIndex</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GameName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ScenarioName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActionChoiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GradeLetter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GradePercent)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GameName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ScenarioName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActionChoiceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradeLetter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradePercent)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

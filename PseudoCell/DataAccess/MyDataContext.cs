@@ -18,5 +18,7 @@ namespace PseudoCell.DataAccess
         public DbSet<GameResult> GameResults { get; set; }
 
         public System.Data.Entity.DbSet<PseudoCell.Models.GameResultViewModel> GameResultViewModels { get; set; }
+
+        //public System.Data.Entity.DbSet<PseudoCell.Models.GameResultViewModel> GameResultViewModels { get; set; }
     }
 }
