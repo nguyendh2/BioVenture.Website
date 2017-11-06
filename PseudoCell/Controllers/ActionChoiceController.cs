@@ -80,18 +80,25 @@ namespace PseudoCell.Controllers
 
                 scenariosForSelect = context.Scenarios.Where(x => x.GameId == scenario.GameId && x.Id != scenarioId).ToList();
             }
+            
             model.ScenariosForSelection = scenariosForSelect.Select(x=>new SelectListItem
                                                     {
                                                         Value=x.Id.ToString(),
                                                         Text=x.Name
                                                     }).ToList();
+            model.ScenariosForSelection.Add(new SelectListItem()
+            {
+                Value="-1",
+                Text= "*End Game*"
+            });
                 return View(model);
         }
         
         [HttpPost]
         [Authorize]
-        public ActionResult Create(ActionChoice model)
+        public ActionResult Create(ActionChoiceAddEditModel addEditModel)
         {
+            var model = addEditModel.ActionChoice;
             var returnView = RedirectToHomeIfNotAdmin();
             if (returnView != null) return returnView;
 
@@ -100,6 +107,15 @@ namespace PseudoCell.Controllers
             using (var context = new MyDataContext())
             {
                 context.ActionChoices.Add(model);
+                var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == model.NextScenarioId);
+                if (model.NextScenarioId == -1)
+                {
+                    model.NextScenarioName = "End Game";
+                }
+                else
+                {
+                    model.NextScenarioName = nextScenario.Name;
+                }
                 context.SaveChanges();
             }
             return RedirectToAction("Index", new { scenarioId = model.ScenarioId });
