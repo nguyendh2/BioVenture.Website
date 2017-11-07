@@ -80,18 +80,30 @@ namespace PseudoCell.Controllers
                     var newGameResult = new GameResultViewModel();
                     
                     var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == result.ActionChoiceId);
-                    var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
-                    var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
 
-                    newGameResult.ActionChoiceName = actionChoice?.Name;
-                    newGameResult.ScenarioName = scenario?.Name;
-                    newGameResult.GameName = game?.Name;
+                    if (actionChoice != null)
+                    {
+                        var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                        var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                        newGameResult.ActionChoiceName = actionChoice?.Name;
+                        newGameResult.ScenarioName = scenario?.Name;
+                        newGameResult.GameName = game?.Name;
+                        
+                    }
+                    else
+                    {
+                        newGameResult.ActionChoiceName = "N/A - Game Not Found";
+                        newGameResult.ScenarioName = "N/A - Game Not Found";
+                        newGameResult.GameName = "N/A - Game Not Found";
+                    }
+
                     newGameResult.Comments = result.Comments;
                     newGameResult.StudentName = result.StudentName;
                     newGameResult.GradeLetter = result.GradeLetter;
                     newGameResult.GradePercent = result.GradePercent;
                     newGameResult.CompleteDate = result.CompleteDate;
-                    
+
                     model.Add(newGameResult);
                 }
             }
