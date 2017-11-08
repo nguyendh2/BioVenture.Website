@@ -89,7 +89,11 @@ namespace PseudoCell.Controllers
                         newGameResult.ActionChoiceName = actionChoice?.Name;
                         newGameResult.ScenarioName = scenario?.Name;
                         newGameResult.GameName = game?.Name;
+<<<<<<< HEAD
 
+=======
+                        
+>>>>>>> aa0e766241006d074c65a359dc79176f225049fe
                     }
                     else
                     {
