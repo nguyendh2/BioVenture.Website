@@ -1,6 +1,16 @@
 Notes for Saturday:
 Note for Monday:10/28/2017
-[]Implement functionality for Action Choice to point to the next scenario
+[]Add random functionality for scenario
+[]Student user can view their game results
+[]Admin can view, edit, and delete game results
+[]Don't allow user to click Back button on the browser
+[]Add Configure Action Links at the Index level, also after creating, re-direct back to index instead of details
+
+[COMPLETED]Allow admin to see game results
+
+[COMPLETED]Allow user to play game
+[COMPLETED]End game with functionality to add comment
+[COMPLETED]Implement functionality for Action Choice to point to the next scenario
 
 [COMPLETED]Inside Edit Game web Page, add a button call add scenario.
 [COMPLETED]Add a new controller insde controllers folder called ScenarioController

@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using PseudoCell.Models;
 using System.Threading.Tasks;
+using System.Web.Caching;
 
 namespace PseudoCell.Controllers
 {
@@ -25,8 +26,123 @@ namespace PseudoCell.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult Select(int actionChoiceId)
+        public ActionResult EditGameResult(int id)
         {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index", "Home");
+
+            var model = new GameResultViewEditModel();
+            using (var context = new MyDataContext())
+            {
+                var gameResult = context.GameResults.FirstOrDefault(x => x.Id == id);
+                if (gameResult == null) return RedirectToAction("GameResultIndex");
+
+                var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == gameResult.ActionChoiceId);
+                var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                model.ActionChoiceName = actionChoice?.Name;
+                model.ScenarioName = scenario?.Name;
+                model.GameName = game?.Name;
+
+                model.Id = gameResult.Id;
+                model.ActionChoiceId = gameResult.ActionChoiceId;
+                model.AspNetUserId = gameResult.AspNetUserId;
+                model.Comments = gameResult.Comments;
+                model.CompleteDate = gameResult.CompleteDate;
+                model.GradeLetter = gameResult.GradeLetter;
+                model.GradePercent = gameResult.GradePercent;
+                model.StudentId = gameResult.StudentId;
+                model.StudentName = gameResult.StudentName;
+            }
+            return View(model);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EditGameResult(GameResultViewEditModel model)
+        {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new MyDataContext())
+            {
+                var retrievedGameResult = context.GameResults.FirstOrDefault(x => x.Id == model.Id);
+                retrievedGameResult.GradeLetter = model.GradeLetter;
+                retrievedGameResult.GradePercent = model.GradePercent;
+                retrievedGameResult.LastChangedDateTime = DateTime.Now;
+                retrievedGameResult.LastChangedBy = User.Identity.GetUserName();
+
+                context.Entry(retrievedGameResult).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+            return RedirectToAction("ViewGameResult",new{id=model.Id});
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult DeleteGameResult(int id)
+        {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new MyDataContext())
+            {
+                var gameResult = context.GameResults.FirstOrDefault(x => x.Id == id);
+                context.Entry(gameResult).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("GameResultIndex");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ViewGameResult(int id)
+        {
+            if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
+                return RedirectToAction("Index", "Home");
+
+            var model = new GameResultViewEditModel();
+            using (var context = new MyDataContext())
+            {
+                var gameResult = context.GameResults.FirstOrDefault(x => x.Id == id);
+                if (gameResult == null) return RedirectToAction("GameResultIndex");
+
+                var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == gameResult.ActionChoiceId);
+                var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                model.ActionChoiceName = actionChoice?.Name;
+                model.ScenarioName = scenario?.Name;
+                model.GameName = game?.Name;
+
+                model.Id = gameResult.Id;
+                model.ActionChoiceId = gameResult.ActionChoiceId;
+                model.AspNetUserId = gameResult.AspNetUserId;
+                model.Comments = gameResult.Comments;
+                model.CompleteDate = gameResult.CompleteDate;
+                model.GradeLetter = gameResult.GradeLetter;
+                model.GradePercent = gameResult.GradePercent;
+                model.StudentId = gameResult.StudentId;
+                model.StudentName = gameResult.StudentName;
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Select(int actionChoiceId, DateTime whenThisRequestIsLegitimatelyCalled)
+        {
+            //Check if player abused the browser's back button
+            var difference = DateTime.Now.Subtract(whenThisRequestIsLegitimatelyCalled);
+            if (difference.Days > 0 || difference.Hours > 0 || difference.Seconds > 2)
+            {
+                return RedirectToAction("Index");
+            }
+
             var model = new PlayScenarioViewModel();
             using (var context = new MyDataContext())
             {
@@ -51,7 +167,7 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult EndGame(int actionChoiceId)
         {
-            var model = new GameResultViewModel() {ActionChoiceId = actionChoiceId};
+            var model = new GameResultViewEditModel() {ActionChoiceId = actionChoiceId};
             using (var context = new MyDataContext())
             {
                 var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
@@ -72,12 +188,12 @@ namespace PseudoCell.Controllers
             if (MyUserManager.IsManager(User.Identity.GetUserId()) == false)
                 return RedirectToAction("Index", "Home");
 
-            var model = new List<GameResultViewModel>();
+            var model = new List<GameResultViewEditModel>();
             using (var context = new MyDataContext())
             {
                 foreach (var result in context.GameResults)
                 {
-                    var newGameResult = new GameResultViewModel();
+                    var newGameResult = new GameResultViewEditModel();
                     
                     var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == result.ActionChoiceId);
 
@@ -93,12 +209,14 @@ namespace PseudoCell.Controllers
                     }
                     else
                     {
-                        newGameResult.ActionChoiceName = "N/A - Game Not Found";
-                        newGameResult.ScenarioName = "N/A - Game Not Found";
-                        newGameResult.GameName = "N/A - Game Not Found";
+                        newGameResult.ActionChoiceName = "N/A - ActionChoice Not Found";
+                        newGameResult.ScenarioName = "N/A - ActionChoice Not Found";
+                        newGameResult.GameName = "N/A - ActionChoice Not Found";
                     }
 
                     newGameResult.Comments = result.Comments;
+                    newGameResult.Id = result.Id;
+                    newGameResult.ActionChoiceId = result.ActionChoiceId;
                     newGameResult.StudentName = result.StudentName;
                     newGameResult.GradeLetter = result.GradeLetter;
                     newGameResult.GradePercent = result.GradePercent;
@@ -113,15 +231,17 @@ namespace PseudoCell.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult EndGame(GameResultViewModel model)
+        public ActionResult EndGame(GameResultViewEditModel gameResultViewEditModel)
         {
             var gameResultToSave = new GameResult()
             {
-                ActionChoiceId = model.ActionChoiceId,
-                Comments = model.Comments,
+                ActionChoiceId = gameResultViewEditModel.ActionChoiceId,
+                Comments = gameResultViewEditModel.Comments,
                 AspNetUserId = User.Identity.GetUserId(),
                 StudentName = User.Identity.GetUserName(),
-                CompleteDate = DateTime.Now
+                CompleteDate = DateTime.Now,
+                LastChangedDateTime = DateTime.Now,
+                LastChangedBy = User.Identity.GetUserName()
             };
 
             using (var context = new MyDataContext())
@@ -137,7 +257,7 @@ namespace PseudoCell.Controllers
         [Authorize]
         public ActionResult GameResultDetails(int gameResultId)
         {
-            var model = new GameResultViewModel();
+            var model = new GameResultViewEditModel();
             using (var context = new MyDataContext())
             {
                 var gameResult = context.GameResults.FirstOrDefault(x => x.Id == gameResultId);

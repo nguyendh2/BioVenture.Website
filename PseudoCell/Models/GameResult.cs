@@ -19,5 +19,7 @@ namespace PseudoCell.Models
         public double? GradePercent { get; set; }
         [Required]
         public DateTime CompleteDate { get; set; }
+        public DateTime? LastChangedDateTime { get; set; }
+        public string LastChangedBy { get; set; }
     }
 }

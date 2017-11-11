@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PseudoCell.Models
 {
-    public class GameResultViewModel : GameResult
+    public class GameResultViewEditModel : GameResult
     {
         public string GameName { get; set; }
         public string ScenarioName { get; set; }

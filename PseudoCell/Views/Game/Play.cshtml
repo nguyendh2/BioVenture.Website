@@ -19,7 +19,7 @@
     @foreach (var item in Model.ActionChoices)
     {
         <div style="margin-left: 50px; margin-bottom: 20px;">
-            (@Html.ActionLink("Select", "Select", new { actionChoiceId = item.Id }))<b>@Html.DisplayFor(modelItem => item.Name) </b>
+            (@Html.ActionLink("Select", "Select", new { actionChoiceId = item.Id, whenThisRequestIsLegitimatelyCalled = DateTime.Now}))<b>@Html.DisplayFor(modelItem => item.Name) </b>
             <br/>
             @Html.DisplayFor(modelItem => item.Description)
             <br/>
