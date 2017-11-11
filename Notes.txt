@@ -2,8 +2,8 @@ Notes for Saturday:
 Note for Monday:10/28/2017
 []Add random functionality for scenario
 []Student user can view their game results
-[]Admin can view, edit, and delete game results
-[]Don't allow user to click Back button on the browser
+[COMPLETED]Admin can view, edit, and delete game results
+[COMPLETED]Don't allow user to click Back button on the browser
 []Add Configure Action Links at the Index level, also after creating, re-direct back to index instead of details
 
 [COMPLETED]Allow admin to see game results
