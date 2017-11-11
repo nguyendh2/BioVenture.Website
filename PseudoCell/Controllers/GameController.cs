@@ -193,8 +193,13 @@ namespace PseudoCell.Controllers
             {
                 foreach (var result in context.GameResults)
                 {
+<<<<<<< HEAD
                     var newGameResult = new GameResultViewEditModel();
                     
+=======
+                    var newGameResult = new GameResultViewModel();
+
+>>>>>>> c74ff2cd5ba4bbcebde3cc46f75697c2a32e7df8
                     var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == result.ActionChoiceId);
 
                     if (actionChoice != null)
@@ -205,7 +210,11 @@ namespace PseudoCell.Controllers
                         newGameResult.ActionChoiceName = actionChoice?.Name;
                         newGameResult.ScenarioName = scenario?.Name;
                         newGameResult.GameName = game?.Name;
+<<<<<<< HEAD
+
+=======
                         
+>>>>>>> aa0e766241006d074c65a359dc79176f225049fe
                     }
                     else
                     {
