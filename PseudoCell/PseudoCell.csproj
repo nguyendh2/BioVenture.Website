@@ -230,8 +230,9 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlayScenarioViewModel.cs" />
     <Compile Include="Models\Scenario.cs" />
-    <Compile Include="Models\ScenarioGroup.cs" />
+    <Compile Include="Models\GameGroupMapping.cs" />
     <Compile Include="Models\ScenarioListViewModel.cs" />
+    <Compile Include="Models\SelectedActionModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="MyDataContextMigrations\201710141635120_m1.cs" />
     <Compile Include="MyDataContextMigrations\201710141635120_m1.Designer.cs">

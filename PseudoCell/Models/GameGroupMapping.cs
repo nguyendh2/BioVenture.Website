@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PseudoCell.Models
 {
-    public class ScenarioGameGroupMapping
+    public class GameGroupMapping
     {
         [Required]
         public int GroupId { get; set; }
@@ -14,6 +14,5 @@ namespace PseudoCell.Models
         public string GroupName { get; set; }
         [Required]
         public int GameId { get; set; }
-
     }
 }

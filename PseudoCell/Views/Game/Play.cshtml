@@ -1,8 +1,10 @@
-﻿@model PseudoCell.Models.PlayScenarioViewModel
+﻿@using PseudoCell.Models
+@model PseudoCell.Models.PlayScenarioViewModel
 
 @{
     ViewBag.Title = "Play";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HiddenDateTime = null;
 }
 
 <h2>@Model.Scenario.GameName</h2>
@@ -12,6 +14,7 @@
 <div>
     <h4>Description</h4>
     @Html.DisplayFor(x => Model.Scenario.Description)
+    
     <hr/>
 </div>
 <div>
@@ -19,12 +22,35 @@
     @foreach (var item in Model.ActionChoices)
     {
         <div style="margin-left: 50px; margin-bottom: 20px;">
-            (@Html.ActionLink("Select", "Select", new { actionChoiceId = item.Id, whenThisRequestIsLegitimatelyCalled = DateTime.Now}))<b>@Html.DisplayFor(modelItem => item.Name) </b>
+            
+            (@Html.ActionLink("Select", "Select", new SelectedActionModel(){actionChoiceId = item.Id, PageGuid = Model.PageGuid}))<b>@Html.DisplayFor(modelItem => item.Name) </b>
             <br/>
             @Html.DisplayFor(modelItem => item.Description)
             <br/>
-            
+
         </div>
     }
     <hr/>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </div>

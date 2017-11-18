@@ -13,7 +13,7 @@ namespace PseudoCell
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            GlobalFilters.Filters.Add(new MyExpirePageActionFilterAttribute());
+            //GlobalFilters.Filters.Add(new MyExpirePageActionFilterAttribute());
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

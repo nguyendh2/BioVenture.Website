@@ -9,5 +9,11 @@ namespace PseudoCell.Models
     {
         public Scenario Scenario { get; set; }
         public List<ActionChoice> ActionChoices { get; set; }
+        public Guid PageGuid { get; set; }
+
+        public PlayScenarioViewModel()
+        {
+            PageGuid = Guid.NewGuid();
+        }
     }
 }

@@ -6,9 +6,8 @@ using PseudoCell.DataAccess;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
-using PseudoCell.Models;
-using System.Threading.Tasks;
 using System.Web.Caching;
+using PseudoCell.Models;
 
 namespace PseudoCell.Controllers
 {
@@ -18,10 +17,17 @@ namespace PseudoCell.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private MyUserManager _myUserManager;
+        private Cache _gameCache;
+        private string _previousPageGuid = "previousPageGuid";
+        private int _maxGuidCount = 25;
 
         public GameController()
         {
-            
+            if (_gameCache == null)
+            {
+                _gameCache = new Cache();
+                _gameCache[_previousPageGuid] = new LinkedList<Guid>();
+            }
         }
 
         [HttpGet]
@@ -132,15 +138,47 @@ namespace PseudoCell.Controllers
             return View(model);
         }
 
+        public void AddPageGuid(Guid param)
+        {
+            LinkedList<Guid> guidList;
+            guidList = (LinkedList<Guid>) _gameCache[_previousPageGuid];
+            guidList.AddLast(param);
+            if (guidList.Count > _maxGuidCount)
+            {
+                guidList.RemoveFirst();
+            }
+            _gameCache[_previousPageGuid] = guidList;
+        }
+
+        public bool IsGuidExists(Guid param)
+        {
+            var guidList = (LinkedList<Guid>) _gameCache[_previousPageGuid];
+            foreach (var guid in guidList)
+            {
+                if (param.CompareTo(guid) == 0)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
         [HttpGet]
         [Authorize]
-        public ActionResult Select(int actionChoiceId, DateTime whenThisRequestIsLegitimatelyCalled)
+        public ActionResult Select(SelectedActionModel selectedActionModel)
         {
+            var actionChoiceId = selectedActionModel.actionChoiceId;
+            var pageGuid = selectedActionModel.PageGuid;
+            
             //Check if player abused the browser's back button
-            var difference = DateTime.Now.Subtract(whenThisRequestIsLegitimatelyCalled);
-            if (difference.Days > 0 || difference.Hours > 0 || difference.Seconds > 4)
+            if (IsGuidExists(pageGuid))
             {
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                AddPageGuid(pageGuid);
             }
 
             var model = new PlayScenarioViewModel();
