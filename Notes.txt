@@ -1,6 +1,6 @@
 Notes for Saturday:
 Note for Monday:10/28/2017
-[]Add random functionality for scenario
+[COMPLETED]Add random functionality for scenario
 []Student user can view their game results
 [COMPLETED]Admin can view, edit, and delete game results
 [COMPLETED]Don't allow user to click Back button on the browser

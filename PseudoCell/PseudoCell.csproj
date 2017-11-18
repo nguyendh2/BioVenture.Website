@@ -225,10 +225,12 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameListViewModel.cs" />
     <Compile Include="Models\GameResultViewEditModel.cs" />
+    <Compile Include="Models\RandomGame.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlayScenarioViewModel.cs" />
     <Compile Include="Models\Scenario.cs" />
+    <Compile Include="Models\ScenarioGroup.cs" />
     <Compile Include="Models\ScenarioListViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="MyDataContextMigrations\201710141635120_m1.cs" />
