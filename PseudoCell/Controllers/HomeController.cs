@@ -101,5 +101,10 @@ namespace PseudoCell.Controllers
 
             return View();
         }
+        public ActionResult Help()
+        {
+            ViewBag.message = "Help";
+            return View();
+        }
     }
 }
