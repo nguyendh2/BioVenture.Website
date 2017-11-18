@@ -138,7 +138,7 @@ namespace PseudoCell.Controllers
         {
             //Check if player abused the browser's back button
             var difference = DateTime.Now.Subtract(whenThisRequestIsLegitimatelyCalled);
-            if (difference.Days > 0 || difference.Hours > 0 || difference.Seconds > 2)
+            if (difference.Days > 0 || difference.Hours > 0 || difference.Seconds > 4)
             {
                 return RedirectToAction("Index");
             }
