@@ -225,6 +225,7 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\GameListViewModel.cs" />
     <Compile Include="Models\GameResultViewEditModel.cs" />
+    <Compile Include="Models\PageToken.cs" />
     <Compile Include="Models\RandomGame.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -293,6 +294,10 @@
     <Compile Include="MyDataContextMigrations\201711112015192_Nov11.cs" />
     <Compile Include="MyDataContextMigrations\201711112015192_Nov11.Designer.cs">
       <DependentUpon>201711112015192_Nov11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201711200149233_PageGuid.cs" />
+    <Compile Include="MyDataContextMigrations\201711200149233_PageGuid.Designer.cs">
+      <DependentUpon>201711200149233_PageGuid.cs</DependentUpon>
     </Compile>
     <Compile Include="MyDataContextMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -457,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDataContextMigrations\201711112015192_Nov11.resx">
       <DependentUpon>201711112015192_Nov11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201711200149233_PageGuid.resx">
+      <DependentUpon>201711200149233_PageGuid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

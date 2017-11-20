@@ -17,17 +17,12 @@ namespace PseudoCell.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private MyUserManager _myUserManager;
-        private Cache _gameCache;
         private string _previousPageGuid = "previousPageGuid";
         private int _maxGuidCount = 25;
 
         public GameController()
         {
-            if (_gameCache == null)
-            {
-                _gameCache = new Cache();
-                _gameCache[_previousPageGuid] = new LinkedList<Guid>();
-            }
+            
         }
 
         [HttpGet]
@@ -138,30 +133,22 @@ namespace PseudoCell.Controllers
             return View(model);
         }
 
-        public void AddPageGuid(Guid param)
+        public bool VerifySessionToken(Guid currentPageGuid)//verify and delete token
         {
-            LinkedList<Guid> guidList;
-            guidList = (LinkedList<Guid>) _gameCache[_previousPageGuid];
-            guidList.AddLast(param);
-            if (guidList.Count > _maxGuidCount)
+            var currentUserId = User.Identity.GetUserId();
+            var result = false;
+            using (var context = new MyDataContext())
             {
-                guidList.RemoveFirst();
-            }
-            _gameCache[_previousPageGuid] = guidList;
-        }
-
-        public bool IsGuidExists(Guid param)
-        {
-            var guidList = (LinkedList<Guid>) _gameCache[_previousPageGuid];
-            foreach (var guid in guidList)
-            {
-                if (param.CompareTo(guid) == 0)
+                var retrievedPageToken = context.PageGuids.FirstOrDefault(x => x.PageGuid.CompareTo(currentPageGuid)==0);
+                if (retrievedPageToken != null && retrievedPageToken.AspNetUserId.Equals(currentUserId))
                 {
-                    return true;
+                    result = true;
+                    context.Entry(retrievedPageToken).State = System.Data.Entity.EntityState.Deleted;
+                    context.SaveChanges();
                 }
+
             }
-            
-            return false;
+            return result;
         }
 
         [HttpGet]
@@ -172,13 +159,9 @@ namespace PseudoCell.Controllers
             var pageGuid = selectedActionModel.PageGuid;
             
             //Check if player abused the browser's back button
-            if (IsGuidExists(pageGuid))
+            if (VerifySessionToken(pageGuid)==false)
             {
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                AddPageGuid(pageGuid);
             }
 
             var model = new PlayScenarioViewModel();
@@ -197,6 +180,9 @@ namespace PseudoCell.Controllers
                 if(game!=null) model.Scenario.GameName = game.Name;
 
             }
+
+            model.PageGuid = Guid.NewGuid();
+            SavePageGuid(model.PageGuid);
 
             return View("Play",model);
         }
@@ -346,7 +332,22 @@ namespace PseudoCell.Controllers
                 _myUserManager = value;
             }
         }
-        
+
+        public void SavePageGuid(Guid guid)
+        {
+            var userId = User.Identity.GetUserId();
+            var model = new PageToken()
+            {
+                AspNetUserId = userId,
+                PageGuid = guid
+            };
+            using(var context = new MyDataContext())
+            {
+                context.PageGuids.Add(model);
+                context.SaveChanges();
+            }
+        }
+
         [HttpGet]
         public ActionResult Play(int gameId)
         {
@@ -360,6 +361,9 @@ namespace PseudoCell.Controllers
                 if(game!=null) scenario.GameName = game.Name;
                 actionChoices = context.ActionChoices.Where(x=>x.ScenarioId == game.FirstScenarioId).ToList();
             }
+
+            model.PageGuid = Guid.NewGuid();
+            SavePageGuid(model.PageGuid);
 
             model.Scenario = scenario;
             model.ActionChoices = actionChoices;
