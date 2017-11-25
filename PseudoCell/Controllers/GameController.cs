@@ -205,6 +205,52 @@ namespace PseudoCell.Controllers
             return View(model);
         }
 
+        [Authorize]
+        public ActionResult GameResultIndexStudent()
+        {
+            var model = new List<GameResultViewEditModel>();
+            using (var context = new MyDataContext())
+            {
+                var userId = User.Identity.GetUserId();
+                var gameResults = context.GameResults.Where(x => x.AspNetUserId.Equals(userId, StringComparison.OrdinalIgnoreCase));
+                foreach (var result in gameResults)
+                {
+                    var newGameResult = new GameResultViewEditModel();
+
+                    var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == result.ActionChoiceId);
+
+                    if (actionChoice != null)
+                    {
+                        var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
+                        var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+
+                        newGameResult.ActionChoiceName = actionChoice?.Name;
+                        newGameResult.ScenarioName = scenario?.Name;
+                        newGameResult.GameName = game?.Name;
+
+                    }
+                    else
+                    {
+                        newGameResult.ActionChoiceName = "N/A - ActionChoice Not Found";
+                        newGameResult.ScenarioName = "N/A - ActionChoice Not Found";
+                        newGameResult.GameName = "N/A - ActionChoice Not Found";
+                    }
+
+                    newGameResult.Comments = result.Comments;
+                    newGameResult.Id = result.Id;
+                    newGameResult.ActionChoiceId = result.ActionChoiceId;
+                    newGameResult.StudentName = result.StudentName;
+                    newGameResult.GradeLetter = result.GradeLetter;
+                    newGameResult.GradePercent = result.GradePercent;
+                    newGameResult.CompleteDate = result.CompleteDate;
+
+                    model.Add(newGameResult);
+                }
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         [Authorize]
         public ActionResult GameResultIndex()

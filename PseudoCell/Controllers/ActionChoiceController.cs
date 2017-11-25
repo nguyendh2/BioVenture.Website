@@ -108,14 +108,8 @@ namespace PseudoCell.Controllers
             {
                 context.ActionChoices.Add(model);
                 var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == model.NextScenarioId);
-                if (model.NextScenarioId == -1)
-                {
-                    model.NextScenarioName = "End Game";
-                }
-                else
-                {
-                    model.NextScenarioName = nextScenario.Name;
-                }
+                model.NextScenarioId = model.NextScenarioId;
+                model.NextScenarioName = model.NextScenarioName;
                 context.SaveChanges();
             }
             return RedirectToAction("Index", new { scenarioId = model.ScenarioId });
@@ -148,9 +142,10 @@ namespace PseudoCell.Controllers
                 retrievedActionChoice.Name = model.ActionChoice.Name;
                 retrievedActionChoice.Description = model.ActionChoice.Description;
                 var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == model.ActionChoice.NextScenarioId);
-                retrievedActionChoice.NextScenarioId = nextScenario.Id;
-                retrievedActionChoice.NextScenarioName = nextScenario.Name;
+                retrievedActionChoice.NextScenarioId = model.ActionChoice.NextScenarioId;
+                retrievedActionChoice.NextScenarioName = model.ActionChoice.NextScenarioName;
                 context.Entry(retrievedActionChoice).State = System.Data.Entity.EntityState.Modified;
+                
                 context.SaveChanges();
             }
             return RedirectToAction("Details", "ActionChoice", new { ActionChoiceId = model.ActionChoice.Id });
@@ -182,6 +177,11 @@ namespace PseudoCell.Controllers
                                                                                             Value=x.Id.ToString(),
                                                                                             Text=x.Name
                                                                                         }).ToList();
+            model.ScenariosForSelection.Add(new SelectListItem()
+            {
+                Value = "-1",
+                Text = "*End Game*"
+            });
 
             return View(model);
         }

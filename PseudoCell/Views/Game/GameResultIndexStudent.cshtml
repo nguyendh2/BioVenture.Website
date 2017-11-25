@@ -1,0 +1,74 @@
+﻿@model IEnumerable<PseudoCell.Models.GameResult>
+
+@{
+    ViewBag.Title = "GameResultIndexStudent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GameResultIndexStudent</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GradeLetter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GradePercent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompleteDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastChangedDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastChangedBy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradeLetter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GradePercent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompleteDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastChangedDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastChangedBy)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>*@
+    </tr>
+}
+
+</table>
+@Html.ActionLink("[Back]", "Index", "Home")
