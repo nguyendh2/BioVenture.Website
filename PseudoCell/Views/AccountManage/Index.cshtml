@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PseudoCell.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h2>Manage Accounts</h2>
+    <span>*Note: Admin accounts are not shown in the list below.</span>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsManager)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStudent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsManager)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsStudent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.AspNetUserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AspNetUserId })
+        </td>
+    </tr>
+}
+
+</table>

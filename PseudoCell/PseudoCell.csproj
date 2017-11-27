@@ -207,6 +207,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountManageController.cs" />
     <Compile Include="Controllers\ActionChoiceController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -404,6 +405,9 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Views\Home\Help.cshtml" />
     <Content Include="Views\Game\GameResultIndexStudent.cshtml" />
+    <Content Include="Views\AccountManage\Index.cshtml" />
+    <Content Include="Views\AccountManage\Details.cshtml" />
+    <Content Include="Views\AccountManage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
