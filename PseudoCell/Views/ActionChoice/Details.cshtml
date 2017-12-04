@@ -78,6 +78,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("[Edit]", "Edit", new { actionChoiceId = Model.Id }) |
-    @Html.ActionLink("[Back to List]", "Index", new { scenarioId = Model.ScenarioId })
+    @Html.ActionLink("Edit", "Edit", new { actionChoiceId = Model.Id }, new { @class = "btn btn-default" }) |
+    @Html.ActionLink("Back", "Index", new { scenarioId = Model.ScenarioId }, new { @class = "btn btn-default" })
 </p>

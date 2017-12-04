@@ -55,14 +55,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("[Back to List]", "Index", new{scenarioId= Model.ActionChoice.ScenarioId})
+    
+    @Html.ActionLink("Back", "Index", new{scenarioId= Model.ActionChoice.ScenarioId}, new { @class = "btn btn-default" })
 </div>
 
 @section Scripts {

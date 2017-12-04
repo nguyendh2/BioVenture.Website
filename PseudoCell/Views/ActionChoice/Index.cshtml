@@ -10,7 +10,7 @@
 <p>
     @if (Model.IsManager)
     {
-        @Html.ActionLink("Create New", "Create", new { scenarioId = Model.ScenarioId })
+        @Html.ActionLink("Create New", "Create", new { scenarioId = Model.ScenarioId }, new { @class = "btn btn-primary" })
     }
 </p>
 <table class="table">
@@ -43,9 +43,9 @@
             </td>
             <td>
                 
-                @Html.ActionLink("Details", "Details", new { actionChoiceId = item.Id}) |
-                @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { actionChoiceId = item.Id })   }|
-                @if(Model.IsManager){@Html.ActionLink("Delete", "Delete", new { actionChoiceId = item.Id})}
+                @Html.ActionLink("Details", "Details", new { actionChoiceId = item.Id}, new { @class = "btn btn-default" }) |
+                @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { actionChoiceId = item.Id }, new { @class = "btn btn-default" })   }|
+                @if(Model.IsManager){@Html.ActionLink("Delete", "Delete", new { actionChoiceId = item.Id}, new { @class = "btn btn-danger" })}
             </td>
         </tr>
     }

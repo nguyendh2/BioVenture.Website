@@ -63,9 +63,9 @@
             @Html.DisplayFor(modelItem => item.GradePercent)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditGameResult", new { id=item.Id }) |
-            @Html.ActionLink("View", "ViewGameResult", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteGameResult", new { id=item.Id })
+            @Html.ActionLink("Edit", "EditGameResult", new { id=item.Id }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("View", "ViewGameResult", new { id=item.Id }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("Delete", "DeleteGameResult", new { id=item.Id }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

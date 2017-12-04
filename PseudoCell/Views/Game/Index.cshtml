@@ -10,9 +10,9 @@
 <p>
     @if (Model.IsManager)
     {
-        @Html.ActionLink("Create", "Create", "Game")
+        @Html.ActionLink("Create", "Create", "Game", new { @class = "btn btn-primary" })
         <span> | </span>
-        @Html.ActionLink("Grade", "GameResultIndex", "Game")
+        @Html.ActionLink("Grade", "GameResultIndex", "Game", new { @class = "btn btn-primary" })
     }
 </p>
 <table class="table">
@@ -36,16 +36,16 @@
         </td>
         
         <td>
-            @Html.ActionLink("Play", "Play", new {gameId = item.Id})|
-            @Html.ActionLink("Details", "Details", new {gameId = item.Id}) |
+            @Html.ActionLink("Play", "Play", new { gameId = item.Id }, new { @class = "btn btn-info" })|
+            @Html.ActionLink("Details", "Details", new {gameId = item.Id}, new { @class = "btn btn-default" }) |
             @if (Model.IsManager)
             {
-                @Html.ActionLink("Edit", "Edit", new {gameId = item.Id})
+                @Html.ActionLink("Edit", "Edit", new { gameId = item.Id }, new { @class = "btn btn-default" })
 
             }|
             @if (Model.IsManager)
             {
-                @Html.ActionLink("Delete", "Delete", new {gameId = item.Id})
+                @Html.ActionLink("Delete", "Delete", new {gameId = item.Id}, new { @class = "btn btn-danger" })
             }
 
         </td>
