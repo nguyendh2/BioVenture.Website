@@ -17,26 +17,25 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.Comments)
+                @Html.DisplayFor(model => model.Comments)
             </div>
         </div>
         
         <div class="form-group">
             @Html.LabelFor(model => model.StudentId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.StudentId)
+                @Html.DisplayFor(model => model.StudentId)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.StudentName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.StudentName)
+                @Html.DisplayFor(model => model.StudentName)
             </div>
         </div>
 
@@ -59,28 +58,28 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CompleteDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.CompleteDate)
+                @Html.DisplayFor(model => model.CompleteDate)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.GameName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.GameName)
+                @Html.DisplayFor(model => model.GameName)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ScenarioName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.ScenarioName)
+                @Html.DisplayFor(model => model.ScenarioName)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ActionChoiceName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayNameFor(model => model.ActionChoiceName)
+                @Html.DisplayFor(model => model.ActionChoiceName)
             </div>
         </div>
 

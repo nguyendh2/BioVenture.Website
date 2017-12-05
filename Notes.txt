@@ -1,13 +1,27 @@
+--------------------------------------------------------------------------------------------------------------------
+**DB Migrations commands**
+-in Visual Studio, go to Tools > Nuget Package Manager > Package Manager Console
+-Type this command in the console: 
+	enable-migrations -ContextTypeName PseudoCell.DataAccess.MyDataContext -MigrationsDirectory: "SchoolDBContextMigrations"
+-If successful, you will see folder called "SchoolDBContextMigrations" created.  Then type this command next:
+	add-migrations -Configuration PseudoCell.SchoolDBContextMigrations.Configuration firstMigration
+-If no errors, type this command next to apply the migrations:
+	update-database -Configuration PseudoCell.SchoolDBContextMigrations.Configuration -verbose
+
+**If any error occured during the entire process (red text - yellow is fine), then stop!.  copy and save the error message.
+**Read the instructions carefully before executing.  Read and proof-read your commands before hiting enter in the console.
+--------------------------------------------------------------------------------------------------------------------
 Notes for Saturday:
-Note for Monday:10/28/2017
+Note for Monday:11/28/2017
 
+[COMPLETED]Change all action links to buttons
 
-
+[COMPLETED]Admin can manage accounts, edit, delete
 [COMPLETED]Add random functionality for scenario
-[]Student user can view their game results
+[COMPLETED]Student user can view their game results
 [COMPLETED]Admin can view, edit, and delete game results
 [COMPLETED]Don't allow user to click Back button on the browser
-[]Add Configure Action Links at the Index level, also after creating, re-direct back to index instead of details
+[COMPLETED]Add Configure Action Links at the Index level, also after creating, re-direct back to index instead of details
 
 [COMPLETED]Allow admin to see game results
 
@@ -19,37 +33,13 @@ Note for Monday:10/28/2017
 [COMPLETED]Add a new controller insde controllers folder called ScenarioController
 [COMPLETED]Inside ScenarioController add a method called Add, parameter is gameId. Link the add Scenario button to this method(use actionlink)
 
-Done 1. Transfer the image and the home page changes from InfiniteCell to PseudoCell
-Done 2. Change controller method to generate a User and insert into User table
-Done 3. Display admin/student at the top where it says hello when logged in
+[COMPLETED]Transfer the image and the home page changes from InfiniteCell to PseudoCell
+[COMPLETED]Change controller method to generate a User and insert into User table
+[COMPLETED]Display admin/student at the top where it says hello when logged in
 
-4. Game page - display a list of games, user can select a game to play. 
-	4b. If user is manager, user can see edit button and add game button.
-		4i. When editting, user can see a list of scenarios that belong to the current game.
-		4ii. When adding or edit, user can click add scenario button.
+[COMPLETED]Game page - display a list of games, user can select a game to play. 
+				4b. If user is manager, user can see edit button and add game button.
+					4i. When editting, user can see a list of scenarios that belong to the current game.
+					4ii. When adding or edit, user can click add scenario button.
 		
 
-Game:
-Scenario 1 - a stranger approached and gave you a cigarrete
-	Option 1 you turn and walk away->Scenario 3
-	Option 2 you say thank and accept it->Scenario 4
-	Option 3 you call the cops->Scenario 5
-Scenario 2 
-	Option 1 ->Scenario 5
-	Option 2 ->Scenario 6
-Scenario 3 - the stranger said he's your father
-	Option 1 you ask him why he never knew about that ->Scenario 7 - Win
-	Option 2 you call your mother and ask ->Scenario 8 - Lose
-Scenario 4 - He asked if you can give him some money
-	Option 1 You gave him 10 dollars ->Scenario 7 - Win
-	Option 2 You refused or gave him less than 1 dollar ->Scenario 9 - Lose
-Scenario 5
-	Option 1 ->Scenario 10 - Lose
-	Option 2 ->Scenario 11 - Lose
-Scenario 6
-	Option 1 ->Scenario 12 - Lose
-	Option 2 ->Scenario 13 - Lose
-Scenario 7
-	No options - just saying because he was innocently put in jail when you were younger.  He got butt raped every day.  Now he needs a few dollars for hot dogs.
-Scenario 9 
-	No options - just display text saying that he beat your ass up and robbed your wallet.  As he walk away, he said "I miss your mom".

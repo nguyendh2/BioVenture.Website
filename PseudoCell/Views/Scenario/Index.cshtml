@@ -37,16 +37,15 @@
                  </td>
 
                  <td>
-                     @Html.ActionLink("Details", "Details", new {scenarioId = item.Id}, new { @class = "btn btn-default" }) |
-                     @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { scenarioId = item.Id }, new { @class = "btn btn-default" })  }|
+                     @Html.ActionLink("Details", "Details", new {scenarioId = item.Id}, new { @class = "btn btn-default" })
+                     @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { scenarioId = item.Id }, new { @class = "btn btn-default" })  }
                      @if(Model.IsManager){@Html.ActionLink("Delete", "Delete", new {scenarioId = item.Id}, new { @class = "btn btn-danger" })}
                  </td>
              </tr>
          }
     }
-
 </table>
 <div>
-    @Html.ActionLink("[Back to Game List]", "BackToScenarioList")
+    @Html.ActionLink("Back", "BackToScenarioList", null, new {@class="btn btn-default" })
 </div>
 

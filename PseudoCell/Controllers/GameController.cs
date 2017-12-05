@@ -41,6 +41,7 @@ namespace PseudoCell.Controllers
                 var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == gameResult.ActionChoiceId);
                 var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
                 var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+                var student = context.Users.FirstOrDefault(x => x.AspNetUserId == gameResult.AspNetUserId);
 
                 model.ActionChoiceName = actionChoice?.Name;
                 model.ScenarioName = scenario?.Name;
@@ -53,7 +54,7 @@ namespace PseudoCell.Controllers
                 model.CompleteDate = gameResult.CompleteDate;
                 model.GradeLetter = gameResult.GradeLetter;
                 model.GradePercent = gameResult.GradePercent;
-                model.StudentId = gameResult.StudentId;
+                model.StudentId = student.StudentId;
                 model.StudentName = gameResult.StudentName;
             }
             return View(model);
@@ -213,9 +214,11 @@ namespace PseudoCell.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 var gameResults = context.GameResults.Where(x => x.AspNetUserId.Equals(userId, StringComparison.OrdinalIgnoreCase));
+                
                 foreach (var result in gameResults)
                 {
                     var newGameResult = new GameResultViewEditModel();
+                    var student = context.Users.FirstOrDefault(x => x.AspNetUserId == result.AspNetUserId);
 
                     var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == result.ActionChoiceId);
 
@@ -227,6 +230,7 @@ namespace PseudoCell.Controllers
                         newGameResult.ActionChoiceName = actionChoice?.Name;
                         newGameResult.ScenarioName = scenario?.Name;
                         newGameResult.GameName = game?.Name;
+                        newGameResult.StudentId = student.StudentId;
 
                     }
                     else
@@ -335,6 +339,7 @@ namespace PseudoCell.Controllers
                 var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == gameResult.ActionChoiceId);
                 var scenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
                 var game = context.Games.FirstOrDefault(x => x.Id == scenario.GameId);
+                var student = context.Users.FirstOrDefault(x => x.AspNetUserId == gameResult.AspNetUserId);
 
                 model.ActionChoiceName = actionChoice?.Name;
                 model.ScenarioName = scenario?.Name;
@@ -347,7 +352,7 @@ namespace PseudoCell.Controllers
                 model.GradePercent = gameResult.GradePercent;
                 model.Comments = gameResult.Comments;
                 model.StudentName = gameResult.StudentName;
-                model.StudentId = gameResult.StudentId;
+                model.StudentId = student.StudentId;
 
 
             }
@@ -434,6 +439,7 @@ namespace PseudoCell.Controllers
             }
             return RedirectToAction("Details", "Game", new { gameId = model.Id});
         }
+
         [HttpGet]
         [Authorize]
         public ActionResult Delete(int gameId)

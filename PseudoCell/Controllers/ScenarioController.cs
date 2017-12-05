@@ -131,7 +131,13 @@ namespace PseudoCell.Controllers
             {
                 var retrievedScenario = context.Scenarios.FirstOrDefault(x => x.Id == scenarioId);
                 gameId = retrievedScenario.GameId;
+                var retrievedGame = context.Games.FirstOrDefault(x => x.Id == gameId);
+                if(retrievedGame.FirstScenarioId == retrievedScenario.Id)
+                {
+                    retrievedGame.FirstScenarioId = 0;
+                }
                 context.Entry(retrievedScenario).State = System.Data.Entity.EntityState.Deleted;
+                context.Entry(retrievedGame).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }
             return RedirectToAction("Index", "Scenario", new{ gameId });

@@ -42,8 +42,8 @@
             @Html.DisplayFor(modelItem => item.StudentId)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.AspNetUserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AspNetUserId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.AspNetUserId }, new {@class="btn btn-default" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.AspNetUserId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }
