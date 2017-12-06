@@ -45,7 +45,7 @@
                 
                 @Html.ActionLink("Details", "Details", new { actionChoiceId = item.Id}, new { @class = "btn btn-default" }) 
                 @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { actionChoiceId = item.Id }, new { @class = "btn btn-default" })   }
-                @if(Model.IsManager){@Html.ActionLink("Delete", "Delete", new { actionChoiceId = item.Id}, new { @class = "btn btn-danger" })}
+                @if(Model.IsManager){@Html.ActionLink("Delete", "Delete", new { actionChoiceId = item.Id}, new { @class = "btn btn-danger" , onclick = "return confirm('Are you sure you wish to delete this action choice?');" })}
             </td>
         </tr>
     }

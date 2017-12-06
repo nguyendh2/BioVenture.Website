@@ -44,7 +44,7 @@
             }
             @if (Model.IsManager)
             {
-                @Html.ActionLink("Delete", "Delete", new {gameId = item.Id}, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Delete", "Delete", new { gameId = item.Id }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you wish to delete this game?');" })
             }
 
         </td>
