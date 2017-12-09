@@ -14,6 +14,17 @@
 Notes for Saturday:
 Note for Monday:11/28/2017
 
+[5]Remove parenthese around the select buttons during play mode, and add space between button and display text
+[5]Change title for grades page
+[5]spacing between play and grade buttons for game index page
+[5]Remove the extra paragraph in home page
+[10]Replace edit button in details page when user is student, into play button
+[20]When game result comment is too long it pushes table to the right
+[5]Back action link in account details when user is student needs to be button
+[5]Remove the unnecessary stuff in the built in account settings page
+[50]Add config feature for admin to indicate if a scenario displays a comment input or not.
+--110
+
 [COMPLETED]Change all action links to buttons
 
 [COMPLETED]Admin can manage accounts, edit, delete
