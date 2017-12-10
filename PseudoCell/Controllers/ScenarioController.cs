@@ -82,9 +82,14 @@ namespace PseudoCell.Controllers
             return View(model);
         }
 
-        public ActionResult BackToScenarioList()
+        public ActionResult BackToGameList()
         {
             return RedirectToAction("Index", "Game");
+        }
+
+        public ActionResult BackToScenarioList(int gameId)
+        {
+            return RedirectToAction("Index", "Scenario", new { gameId });
         }
 
         [HttpGet]
@@ -135,6 +140,11 @@ namespace PseudoCell.Controllers
                 if(retrievedGame.FirstScenarioId == retrievedScenario.Id)
                 {
                     retrievedGame.FirstScenarioId = 0;
+                }
+                var actionChoices = context.ActionChoices.Where(x => x.ScenarioId == retrievedScenario.Id);
+                foreach(var actionChoice in actionChoices)
+                {
+                    context.Entry(actionChoice).State = System.Data.Entity.EntityState.Deleted;
                 }
                 context.Entry(retrievedScenario).State = System.Data.Entity.EntityState.Deleted;
                 context.Entry(retrievedGame).State = System.Data.Entity.EntityState.Modified;
@@ -188,6 +198,7 @@ namespace PseudoCell.Controllers
                 retrievedScenario.LastChangedDate = DateTime.Now;
                 retrievedScenario.Name = model.Name;
                 retrievedScenario.Description = model.Description;
+                retrievedScenario.IsCommentRequired = model.IsCommentRequired;
                 context.Entry(retrievedScenario).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }

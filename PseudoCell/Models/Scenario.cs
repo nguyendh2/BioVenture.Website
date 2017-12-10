@@ -22,5 +22,6 @@ namespace PseudoCell.Models
         public DateTime? LastChangedDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool IsCommentRequired { get; set; }
     }
 }

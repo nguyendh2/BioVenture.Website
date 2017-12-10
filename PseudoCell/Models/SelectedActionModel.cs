@@ -9,5 +9,7 @@ namespace PseudoCell.Models
     {
         public int actionChoiceId { get; set; }
         public Guid PageGuid { get; set; }
+        public string AccumulatedComments { get; set; }
+        public string CurrentComments { get; set; }
     }
 }

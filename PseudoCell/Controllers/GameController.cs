@@ -152,12 +152,12 @@ namespace PseudoCell.Controllers
             return result;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public ActionResult Select(SelectedActionModel selectedActionModel)
+        public ActionResult Play(PlayScenarioViewModel inputModel)
         {
-            var actionChoiceId = selectedActionModel.actionChoiceId;
-            var pageGuid = selectedActionModel.PageGuid;
+            var actionChoiceId = inputModel.SelectedChoice;
+            var pageGuid = inputModel.PageGuid;
             
             //Check if player abused the browser's back button
             if (VerifySessionToken(pageGuid)==false)
@@ -169,10 +169,11 @@ namespace PseudoCell.Controllers
             using (var context = new MyDataContext())
             {
                 var actionChoice = context.ActionChoices.FirstOrDefault(x => x.Id == actionChoiceId);
+                var currentScenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.ScenarioId);
                 var nextScenario = context.Scenarios.FirstOrDefault(x => x.Id == actionChoice.NextScenarioId);
                 if (nextScenario == null)
                 {
-                    return RedirectToAction("EndGame",new{actionChoiceId});
+                    return RedirectToAction("EndGame",new{actionChoiceId,accumulatedComments=inputModel.AccumulatedComments});
                 }
                 var actionChoices = context.ActionChoices.Where(x => x.ScenarioId == nextScenario.Id).ToList();
                 var game = context.Games.FirstOrDefault(x => x.Id == nextScenario.GameId);
@@ -180,17 +181,27 @@ namespace PseudoCell.Controllers
                 model.ActionChoices = actionChoices;
                 if(game!=null) model.Scenario.GameName = game.Name;
 
-            }
+                if (string.IsNullOrWhiteSpace(inputModel.CurrentComment) == false)
+                {
+                    model.AccumulatedComments = inputModel.AccumulatedComments;
+                    ModelState.Remove("AccumulatedComments");
+                    model.AccumulatedComments += "\n >>>>>>[Scenario Name]: " + currentScenario.Name;
+                    model.AccumulatedComments += "\n [Action Chosen]: " + actionChoice.Name;
+                    model.AccumulatedComments += "\n [Student Commented]: " + inputModel.CurrentComment;
+                }
 
+            }
+            ModelState.Remove("PageGuid");
+            ModelState.Remove("CurrentComment");
             model.PageGuid = Guid.NewGuid();
             SavePageGuid(model.PageGuid);
 
-            return View("Play",model);
+            return View(model);
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult EndGame(int actionChoiceId)
+        public ActionResult EndGame(int actionChoiceId, string accumulatedComments)
         {
             var model = new GameResultViewEditModel() {ActionChoiceId = actionChoiceId};
             using (var context = new MyDataContext())
@@ -202,6 +213,7 @@ namespace PseudoCell.Controllers
                 model.ActionChoiceName = actionChoice?.Name;
                 model.ScenarioName = scenario?.Name;
                 model.GameName = game?.Name;
+                model.AccumulatedComments = accumulatedComments;
             }
             return View(model);
         }
@@ -288,7 +300,12 @@ namespace PseudoCell.Controllers
                         newGameResult.GameName = "N/A - ActionChoice Not Found";
                     }
 
-                    newGameResult.Comments = result.Comments;
+                    if (result.Comments != null && result.Comments.Length>=30) {
+                        newGameResult.Comments = result.Comments?.Substring(0, Math.Min(30, result.Comments.Length)) + "...";
+                    }
+                    else {
+                        newGameResult.Comments = result.Comments;
+                    }
                     newGameResult.Id = result.Id;
                     newGameResult.ActionChoiceId = result.ActionChoiceId;
                     newGameResult.StudentName = result.StudentName;
@@ -310,7 +327,7 @@ namespace PseudoCell.Controllers
             var gameResultToSave = new GameResult()
             {
                 ActionChoiceId = gameResultViewEditModel.ActionChoiceId,
-                Comments = gameResultViewEditModel.Comments,
+                Comments = gameResultViewEditModel.AccumulatedComments +"\n [Student's End-Game Comment]:" + gameResultViewEditModel.Comments,
                 AspNetUserId = User.Identity.GetUserId(),
                 StudentName = User.Identity.GetUserName(),
                 CompleteDate = DateTime.Now,
@@ -450,6 +467,17 @@ namespace PseudoCell.Controllers
             using (var context = new MyDataContext())
             {
                 var retrievedGame = context.Games.FirstOrDefault(x => x.Id == gameId);
+                var scenarios = context.Scenarios.Where(x => x.GameId == retrievedGame.Id);
+
+                foreach (var scenario in scenarios) {
+                    var actionchoices = context.ActionChoices.Where(x => x.ScenarioId == scenario.Id);
+                    foreach(var actionChoice in actionchoices)
+                    {
+                        context.Entry(actionChoice).State = System.Data.Entity.EntityState.Deleted;
+                    }
+                    context.Entry(scenario).State = System.Data.Entity.EntityState.Deleted;
+                }
+
                 context.Entry(retrievedGame).State = System.Data.Entity.EntityState.Deleted;
                 context.SaveChanges();
             }
@@ -478,9 +506,11 @@ namespace PseudoCell.Controllers
         {
             using(var context = new MyDataContext())
             {
-                var model = context.Games.FirstOrDefault(x=>x.Id == gameId);
-                if (model != null)
+                var game = context.Games.FirstOrDefault(x=>x.Id == gameId);
+                if (game != null)
                 {
+                    var isStudent = MyUserManager.IsStudent(User.Identity.GetUserId());
+                    var model = new GameDetailsView() { Game = game , IsStudent = isStudent};
                     return View(model);
                 }
             }

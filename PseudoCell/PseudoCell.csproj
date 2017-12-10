@@ -300,9 +300,18 @@
     <Compile Include="MyDataContextMigrations\201711200149233_PageGuid.Designer.cs">
       <DependentUpon>201711200149233_PageGuid.cs</DependentUpon>
     </Compile>
+    <Compile Include="MyDataContextMigrations\201712092155291_dec9.cs" />
+    <Compile Include="MyDataContextMigrations\201712092155291_dec9.Designer.cs">
+      <DependentUpon>201712092155291_dec9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyDataContextMigrations\201712092215512_dec9b.cs" />
+    <Compile Include="MyDataContextMigrations\201712092215512_dec9b.Designer.cs">
+      <DependentUpon>201712092215512_dec9b.cs</DependentUpon>
+    </Compile>
     <Compile Include="MyDataContextMigrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Views\Game\GameDetailsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -471,6 +480,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDataContextMigrations\201711200149233_PageGuid.resx">
       <DependentUpon>201711200149233_PageGuid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201712092155291_dec9.resx">
+      <DependentUpon>201712092155291_dec9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyDataContextMigrations\201712092215512_dec9b.resx">
+      <DependentUpon>201712092215512_dec9b.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

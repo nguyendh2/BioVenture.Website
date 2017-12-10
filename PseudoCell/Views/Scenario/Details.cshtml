@@ -26,9 +26,15 @@
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCommentRequired)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsCommentRequired)
+        </dd>
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Back", "BackToScenarioList", new { gameId = Model.GameId }, new { @class = "btn btn-default" })
     @Html.ActionLink("Edit", "Edit", new { scenarioId = Model.Id }, new { @class = "btn btn-default" })
-    @Html.ActionLink("Back", "BackToScenarioList", new{gameId = Model.GameId}, new { @class = "btn btn-default" })
 </p>

@@ -11,6 +11,7 @@
     @if (Model.IsManager)
     {
         @Html.ActionLink("Create", "Create", "Game", new { @class = "btn btn-primary" })
+        <span>&nbsp</span>
         @Html.ActionLink("Grade", "GameResultIndex", "Game", new { @class = "btn btn-primary" })
     }
 </p>

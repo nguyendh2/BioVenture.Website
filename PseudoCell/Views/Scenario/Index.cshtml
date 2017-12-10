@@ -21,6 +21,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Scenarios[0].Description)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Scenarios[0].IsCommentRequired)
+        </th>
         <th></th>
     </tr>
 
@@ -35,7 +38,9 @@
                  <td>
                      @Html.DisplayFor(modelItem => item.Description)
                  </td>
-
+                 <td>
+                     @Html.DisplayFor(modelItem => item.IsCommentRequired)
+                 </td>
                  <td>
                      @Html.ActionLink("Details", "Details", new {scenarioId = item.Id}, new { @class = "btn btn-default" })
                      @if(Model.IsManager){@Html.ActionLink("Edit", "Edit", new { scenarioId = item.Id }, new { @class = "btn btn-default" })  }
@@ -46,6 +51,6 @@
     }
 </table>
 <div>
-    @Html.ActionLink("Back", "BackToScenarioList", null, new {@class="btn btn-default" })
+    @Html.ActionLink("Back", "BackToGameList", null, new {@class="btn btn-default" })
 </div>
 

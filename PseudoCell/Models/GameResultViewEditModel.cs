@@ -10,5 +10,6 @@ namespace PseudoCell.Models
         public string GameName { get; set; }
         public string ScenarioName { get; set; }
         public string ActionChoiceName { get; set; }
+        public string AccumulatedComments { get; set; }
     }
 }

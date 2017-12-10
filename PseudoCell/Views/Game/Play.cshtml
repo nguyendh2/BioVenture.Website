@@ -17,20 +17,50 @@
     
     <hr/>
 </div>
-<div>
-    <h4>Choices</h4>
-    @foreach (var item in Model.ActionChoices)
-    {
-        <div style="margin-left: 50px; margin-bottom: 20px;">
-            
-            (@Html.ActionLink("Select", "Select", new SelectedActionModel(){actionChoiceId = item.Id, PageGuid = Model.PageGuid}, new { @class = "btn btn-default" }))<b>@Html.DisplayFor(modelItem => item.Name) </b>
-            <br/>
-            @Html.DisplayFor(modelItem => item.Description)
-            <br/>
 
+@using (Html.BeginForm("Play", "Game", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="form-horizontal">
+        <h4>Choices</h4><br/>
+        <div>
+        @Html.HiddenFor(m => Model.PageGuid)
+        @Html.HiddenFor(m => Model.AccumulatedComments)
+        @foreach (var item in Model.ActionChoices)
+        {
+            <div style="margin-left: 50px; margin-bottom: 20px;">
+                <div>
+                @*<div class="col-md-2 col-sm-2 col-lg-1">
+                    
+                </div>
+                <div class="col-md-10 col-sm-10 col-lg-11">*@
+                    @Html.RadioButtonFor(m => Model.SelectedChoice, item.Id)
+                    <b>@Html.DisplayFor(modelItem => item.Name)</b>
+
+                    <br />
+                    @Html.DisplayFor(modelItem => item.Description)
+                    <br />
+                </div>
+            </div>
+        }
         </div>
-    }
-    <hr/>
+        <div style="margin-top:20px;">
+            <br/>
+            @if (Model.Scenario.IsCommentRequired)
+            {
+                <br/><br/>
+                <h5>Important Note*: Comment is required for this scenario.  Please enter your comments before selecting a choice!</h5>
+                @Html.TextAreaFor(model => model.CurrentComment, new { @cols = "80", @rows = "4", required ="required"})
+                @Html.ValidationMessageFor(model => model.CurrentComment, "", new { @class = "text-danger" })
+            }
+            <div class="form-group">
+                <div style="margin:17px">
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+}
     
     
     
@@ -49,8 +79,3 @@
     
     
     
-    
-    
-    
-    
-</div>

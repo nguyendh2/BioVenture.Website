@@ -41,9 +41,10 @@
             </dt>
 
             <dd>
-                @Html.TextAreaFor(model => model.Comments)
+                @Html.TextAreaFor(model => model.Comments, new { @cols = "80", @rows = "4" })
             </dd>
             @Html.HiddenFor(model => model.ActionChoiceId)
+            @Html.HiddenFor(model => model.AccumulatedComments)
             @Html.HiddenFor(model => model.AspNetUserId)
             @Html.HiddenFor(model => model.GradeLetter)
             @Html.HiddenFor(model => model.GradePercent)
