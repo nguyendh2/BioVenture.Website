@@ -33,7 +33,7 @@
                     
                 </div>
                 <div class="col-md-10 col-sm-10 col-lg-11">*@
-                    @Html.RadioButtonFor(m => Model.SelectedChoice, item.Id)
+                    @Html.RadioButtonFor(m => Model.SelectedChoice, item.Id, new { @required="required"})
                     <b>@Html.DisplayFor(modelItem => item.Name)</b>
 
                     <br />
